@@ -1,0 +1,8 @@
+.wrapper {
+    height: 350px;
+    margin-top: 30px;
+}
+
+.content {
+    min-height: 70vh;
+}
