@@ -555,6 +555,7 @@ h2.title {
 
 .content {
     margin-top: 35px;
+    width: 100%;
 }
 
 .product {
@@ -579,6 +580,15 @@ h2.title {
 }
 
 .img-product {
-    width: 200px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
+    margin-bottom: 20px;
+}
+.product-img {
+    margin-top: 20px;
+    min-height: 600px;
+}
+
+.product-btn {
+    width: 92%;
 }

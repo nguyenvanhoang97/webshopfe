@@ -163,3 +163,48 @@ img {
         transform: scale(1); } }
 
 /*# sourceMappingURL=style.css.map */
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.post-comment {
+    border: solid;
+}
+
+.post-footer {
+    display: flex;
+    text-align: center;
+    background-color: #C2C2C1;
+}
+
+.post-share {
+    margin-top: 13px;
+}
+
+.btn-comment {
+    margin-top: 13px;
+}
+.image-product-detail {
+    max-height: 800px;
+}
