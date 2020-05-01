@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import * as axios from 'axios'
 import "./productitem.css"
 import {Container, Row, Col} from "reactstrap";
 
@@ -7,7 +8,7 @@ function ProductItem(props) {
     const idPro = props.match.params.id;
 
     const getData = async () => {
-        const res = await fetch('http://localhost:4000/product/' + idPro);
+        const res = await axios('http://localhost:4000/product/' + idPro);
         const data = await res.json();
         console.log(data)
         setData(data);

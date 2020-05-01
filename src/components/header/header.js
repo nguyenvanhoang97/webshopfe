@@ -58,7 +58,7 @@ function Header() {
                                 <ul className="nav navbar-nav">
                                     <li>
                                         <a href="/login">
-                                            <i className="fa fa-crosshairs" /> CART
+                                            <i className="fa fa-crosshairs" /> LOGIN
                                         </a>
                                     </li>
                                     <li>

@@ -1,8 +1,5 @@
-import React, {useState} from "react";
-import Header from "../../components/header/header";
-import Footer from "../../components/footer/footer";
+import React, {} from "react";
 import {Container, Col} from "reactstrap";
-import * as axios from "axios";
 
 function AddProduct() {
 
@@ -12,7 +9,7 @@ function AddProduct() {
                 <Col sm={2}></Col>
                 <Col sm={8}>
                     <h2 className="title-side text-center">Thêm sản phẩm</h2>
-                    <div >
+                    <div>
                         <label htmlFor="fname">Tên sản phẩm</label>
                         <input type="text" id="name" name="name" placeholder="Tên sản phẩm"/>
 

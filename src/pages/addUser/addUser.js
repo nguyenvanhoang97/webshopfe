@@ -6,6 +6,7 @@ function AddUser() {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPass] = useState('');
+    const [isAdmin, setAdmin] = useState('');
     const submit = e => {
         e.preventDefault()
         axios.post("http://localhost:4000/user",
@@ -48,6 +49,11 @@ function AddUser() {
                                value={password}
                                onChange={e => setPass(e.target.value)}
                         />
+
+                        <label className="checkbox">
+                            <input type="checkbox" value="true" id="isadmin" name="isAdmin"
+                                   onChange={e => setAdmin(e.target.value)}/> Check admin
+                        </label>
 
                         <button type="button" className="btn-custom" onClick={submit}>
                             Thêm Admin

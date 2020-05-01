@@ -8,7 +8,7 @@ function HomeAdmin() {
     const [data, setData] = useState([]);
 
     const getData = async () => {
-        const {data} = await axios("https://jsonplaceholder.typicode.com/albums/1/photos");
+        const {data} = await axios("http://localhost:4000/product");
         console.log(data);
         setData(data);
     };
@@ -21,8 +21,8 @@ function HomeAdmin() {
         return (
             <tr key={index}>
                 <td>{product.id}</td>
-                <td>{product.title}</td>
-                <td>{product.thumbnailUrl}</td>
+                <td>{product.name}</td>
+                <td><img className="image-table" src={product.image}/></td>
                 <td>{product.url}</td>
                 <td>
                     <button className="btn-custom">Edit</button>
@@ -36,13 +36,13 @@ function HomeAdmin() {
         <Container fluid>
             <Container fluid className="">
                 <h2 className="title-side text-center">Danh mục sản phẩm</h2>
-                <Col sm={2}></Col>
-                <Col sm={8}>
+                <Col sm={1}></Col>
+                <Col sm={10}>
                     <Table className="table">
                         <thead>
-                        <th className="text-center">ID</th>
-                        <th className="text-center">Title</th>
-                        <th className="text-center">Image</th>
+                        <th className="text-center">STT</th>
+                        <th className="text-center">Tên sản phẩm</th>
+                        <th className="text-center">Ảnh minh họa</th>
                         <th className="text-center">Image</th>
                         <th></th>
                         </thead>
@@ -50,9 +50,9 @@ function HomeAdmin() {
                             {data.map(dataProducts)}
                         </tbody>
                     </Table>
-                    <Button href="/addproduct" className="btn-custom">Thêm Sản Phẩm</Button>
+                    <Button href="/add/product" className="btn-custom">Thêm Sản Phẩm</Button>
                 </Col>
-                <Col sm={2}></Col>
+                <Col sm={1}></Col>
             </Container>
         </Container>
     )

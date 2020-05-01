@@ -1,12 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Container, Row, Col} from "reactstrap";
 import "./blogcontent.css"
 
 function BlogContent() {
     const [data, setData] = useState([]);
-    useEffect(async () => {
-
-    }, []);
 
     const [search, setSearch] = useState([]);
 

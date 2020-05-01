@@ -208,3 +208,8 @@ input[type=submit]:hover {
 .image-product-detail {
     max-height: 800px;
 }
+
+.image-table {
+    height: 300px;
+    width: 300px;
+}

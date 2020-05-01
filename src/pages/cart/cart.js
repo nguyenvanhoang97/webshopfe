@@ -1,7 +1,6 @@
 import React, {  } from "react";
 import "./cart.css";
-import {Container, Row, Col, Table} from "reactstrap";
-import {Button} from "react-bootstrap";
+import {Container, Row, Col} from "reactstrap";
 
 function ContentCart() {
 
@@ -29,7 +28,7 @@ function ContentCart() {
                 <Col sm={2}></Col>
                 <Col sm={8} className="shopping-cart">
                     <div>
-                        <Table className="table">
+                        <table className="table">
                             <thead>
                                 <th className="text-center col-sm-1">STT</th>
                                 <th className="text-center col-sm-3">Tên sản phẩm</th>
@@ -42,7 +41,7 @@ function ContentCart() {
                             <tbody>
 
                             </tbody>
-                        </Table>
+                        </table>
                     </div>
                     <Row className="total-product">
                         <div className="totals">

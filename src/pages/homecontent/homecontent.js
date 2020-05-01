@@ -99,8 +99,9 @@ function HomeContent() {
                                                     <img alt={product.name} key={product._id}
                                                          className="img-product"
                                                          src={product.image}/>
+
+                                                    <h3 className="title-side text-center">{product.name}</h3>
                                                 </a>
-                                                <h3 className="title-side text-center">{product.name}</h3>
                                                 <h3 className="text-center">Giá: {product.price} vnđ</h3>
                                                 <button className="btn-custom product-btn">Add to cart</button>
                                             </div>
