@@ -32,7 +32,7 @@ function Main() {
                     <Route path="/add/product" component={AddProduct} />
                     <Route path="/add/user" component={AddUser} />
                     <Route path="/user" component={UserContent} />
-                    <Route path='/news/:id' component={NewsItem}/>
+                    <Route path='/blog/:id' component={NewsItem}/>
                     <Route path="/order" component={CheckOut} />
                 </Router>
             </Container>

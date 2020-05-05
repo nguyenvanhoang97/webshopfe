@@ -6,12 +6,12 @@ function AddUser() {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPass] = useState('');
-    const [isAdmin, setAdmin] = useState('');
+    const [isAdmin, setAdmin] = useState(false);
     const submit = e => {
         e.preventDefault()
         axios.post("http://localhost:4000/user",
             {
-                name, username, password
+                name, username, password, isAdmin
             }
         )
             .then(function (response) {
@@ -52,7 +52,7 @@ function AddUser() {
 
                         <label className="checkbox">
                             <input type="checkbox" value="true" id="isadmin" name="isAdmin"
-                                   onChange={e => setAdmin(e.target.value)}/> Check admin
+                                   onChange={e => setAdmin(JSON.parse(e.target.value))}/> Check admin
                         </label>
 
                         <button type="button" className="btn-custom" onClick={submit}>

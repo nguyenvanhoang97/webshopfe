@@ -9,7 +9,6 @@ function HomeAdmin() {
 
     const getData = async () => {
         const {data} = await axios("http://localhost:4000/product");
-        console.log(data);
         setData(data);
     };
 

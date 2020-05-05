@@ -5,13 +5,34 @@ import {Container, Row, Col} from "reactstrap";
 
 function ProductItem(props) {
     const [data, setData] = useState([]);
-    const idPro = props.match.params.id;
+    console.log(props)
+    const idProduct = props.match.params.id;
+    const idUser = props.match.params.id;
 
     const getData = async () => {
-        const res = await axios('http://localhost:4000/product/' + idPro);
-        const data = await res.json();
-        console.log(data)
+        const {data} = await axios('http://localhost:4000/product/' + idProduct);
         setData(data);
+    };
+
+    const addToCart = e => {
+        e.preventDefault()
+
+        axios.post("http://localhost:4000/cart",
+            {
+                idProduct, idUser
+            }
+        )
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+
+                } else {
+
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     useEffect(async () => {
@@ -26,31 +47,28 @@ function ProductItem(props) {
                     <Col sm={2}></Col>
                     <Col sm={8} className="product-details">
                         {
-                            data.map((product, i) => {
-                                return (
-                                    <Row>
-                                        <Col sm={8} className="product-details-image">
-                                            <div className="image-product-detail">
-                                                <img alt={product.name} key={product.id}
-                                                     className="image-product-detail"
-                                                     src={product.image}/>
-                                            </div>
-                                        </Col>
-                                        <Col sm={4} className="details">
-                                            <h3 className="title-side">{product.name}</h3>
-                                            <div className="rating">
-                                                <div className="stars">
-                                                </div>
-                                            </div>
-                                            <h3 className="">Giá: {product.price} <span></span></h3>
-                                            <h4 className="">Mô tả: {product.description} <span></span></h4>
-                                            <div className="action">
-                                                <button className="btn btn-default btn-custom" type="button">add to cart</button>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                );
-                            })
+                            <Row>
+                                <Col sm={8} className="product-details-image">
+                                    <div className="image-product-detail">
+                                        <img alt={data.name} key={data.id}
+                                             className="image-product-detail"
+                                             src={data.image}/>
+                                    </div>
+                                </Col>
+                                <Col sm={4} className="details">
+                                    <h3 className="title-side">{data.name}</h3>
+                                    <div className="rating">
+                                        <div className="stars">
+                                        </div>
+                                    </div>
+                                    <h3 className="">Giá: {data.price} <span></span></h3>
+                                    <h4 className="">Mô tả: {data.description} <span></span></h4>
+                                    <div className="action">
+                                        <button className="btn btn-default btn-custom" type="button"
+                                            onClick={addToCart}>add to cart</button>
+                                    </div>
+                                </Col>
+                            </Row>
                         }
                     </Col>
                     <Col sm={2}></Col>

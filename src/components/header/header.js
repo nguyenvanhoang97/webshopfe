@@ -2,10 +2,13 @@ import React, {} from "react";
 import {Container, Row, Col} from "reactstrap"
 import "./header.css";
 
-function Header() {
+function Header(props) {
+
+    console.log(props);
 
     return(
         <Container fluid className="header">
+
             <Container fluid className="header-top">
                 <div className="header_top">
                     <div className="container">
@@ -41,8 +44,11 @@ function Header() {
                             <div className="mainmenu pull-left">
                                 <ul className="nav navbar-nav collapse navbar-collapse">
                                     <li><a href="/" className="active">TRANG CHỦ</a></li>
-                                    <li><a href="/blog">TIN TỨC<i></i></a></li>
-                                    <li><a href="/contact">LIÊN HỆ<i></i></a></li>
+                                    <li><a href="/user">NGƯỜI DÙNG</a></li>
+                                    <li><a href="/news">BÀI VIẾT</a></li>
+                                    <li><a href="/order">ĐƠN HÀNG</a></li>
+                                    <li><a href="/blog">TIN TỨC</a></li>
+                                    <li><a href="/contact">LIÊN HỆ</a></li>
                                 </ul>
                             </div>
                         </Col>
@@ -54,11 +60,17 @@ function Header() {
                             </div>
                         </Col>
                         <Col sm={4}>
+
                             <div className="shop-menu pull-right">
                                 <ul className="nav navbar-nav">
                                     <li>
                                         <a href="/login">
                                             <i className="fa fa-crosshairs" /> LOGIN
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <i className="fa fa-crosshairs"/> LOGOUT
                                         </a>
                                     </li>
                                     <li>
