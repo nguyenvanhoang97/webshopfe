@@ -4,11 +4,8 @@ import "./header.css";
 
 function Header(props) {
 
-    console.log(props);
-
     return(
         <Container fluid className="header">
-
             <Container fluid className="header-top">
                 <div className="header_top">
                     <div className="container">
@@ -16,19 +13,19 @@ function Header(props) {
                             <Col sm={6}>
                                 <Row className="contactinfo">
                                     <ul className="nav nav-pills">
-                                        <li><a><i className="fa fa-phone"></i> +2 95 01 88 821</a></li>
-                                        <li><a><i className="fa fa-envelope"></i> info@domain.com</a></li>
+                                        {/*<li><a><i className="fa fa-phone"></i> +2 95 01 88 821</a></li>*/}
+                                        {/*<li><a><i className="fa fa-envelope"></i> info@domain.com</a></li>*/}
                                     </ul>
                                 </Row>
                             </Col>
                             <Col sm={6}>
                                 <Row className="social-icons pull-right">
                                     <ul className="nav navbar-nav">
-                                        <li><a><i className="fa fa-facebook"></i></a></li>
-                                        <li><a><i className="fa fa-twitter"></i></a></li>
-                                        <li><a><i className="fa fa-linkedin"></i></a></li>
-                                        <li><a><i className="fa fa-dribbble"></i></a></li>
-                                        <li><a><i className="fa fa-google-plus"></i></a></li>
+                                        {/*<li><a><i className="fa fa-facebook"></i></a></li>*/}
+                                        {/*<li><a><i className="fa fa-twitter"></i></a></li>*/}
+                                        {/*<li><a><i className="fa fa-linkedin"></i></a></li>*/}
+                                        {/*<li><a><i className="fa fa-dribbble"></i></a></li>*/}
+                                        {/*<li><a><i className="fa fa-google-plus"></i></a></li>*/}
                                     </ul>
                                 </Row>
                             </Col>

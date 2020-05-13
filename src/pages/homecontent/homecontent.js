@@ -9,10 +9,15 @@ function HomeContent() {
     const [search, setSearch] = useState([]);
 
     const getData = async () => {
-        const {data} = await axios("http://localhost:4000/product");
-        setDataShow(data);
-        console.log(data);
-        setDataFull(data);
+        axios.defaults.withCredentials = true
+        try {
+            const {data} = await axios("http://localhost:4000/product");
+            setDataShow(data);
+            console.log(data);
+            setDataFull(data);
+        } catch (e) {
+            alert(e.response ? e.response.msg : e.message)
+        }
     };
 
     useEffect(() => {

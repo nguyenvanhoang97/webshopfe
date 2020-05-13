@@ -12,20 +12,28 @@ function HomeAdmin() {
         setData(data);
     };
 
-    useEffect(async () => {
+    useEffect( () => {
         getData();
     }, []);
+
+    const removeProduct = async (idProduct) => {
+        await axios({
+            method: 'delete',
+            url: 'http://localhost:4000/product/' + idProduct
+        });
+        window.location.reload();
+    };
 
     const dataProducts = (product, index) => {
         return (
             <tr key={index}>
-                <td>{product.id}</td>
+                <td>{product._id}</td>
                 <td>{product.name}</td>
                 <td><img className="image-table" src={product.image}/></td>
                 <td>{product.url}</td>
                 <td>
                     <button className="btn-custom">Edit</button>
-                    <button className="btn-custom">Delete</button>
+                    <button className="btn-custom" onClick={() => removeProduct(product._id)}>Delete</button>
                 </td>
             </tr>
         )

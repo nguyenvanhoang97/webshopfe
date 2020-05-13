@@ -31,6 +31,7 @@ function Main() {
                     <Route path="/home" component={HomeAdmin} />
                     <Route path="/add/product" component={AddProduct} />
                     <Route path="/add/user" component={AddUser} />
+                    <Route path="/edit/user/:id" component={AddUser} />
                     <Route path="/user" component={UserContent} />
                     <Route path='/blog/:id' component={NewsItem}/>
                     <Route path="/order" component={CheckOut} />

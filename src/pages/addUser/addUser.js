@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Container, Col} from "reactstrap";
 import * as axios from 'axios'
 
-function AddUser() {
+function AddUser(props) {
+    console.log(props)
+    const idUser = props.match.params.id;
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPass] = useState('');
@@ -20,14 +22,24 @@ function AddUser() {
             .catch(function (error) {
                 console.log(error);
             });
+        window.location.replace('http://localhost:3000/user');
     }
+
+    const getUserById = async () => {
+        const {data} = await axios('http://localhost:4000/user/' + idUser);
+        console.log(data)
+    };
+
+    useEffect( () => {
+        getUserById();
+    }, []);
 
     return (
         <Container fluid>
             <Container fluid>
                 <Col sm={2}></Col>
                 <Col sm={8}>
-                    <h2 className="title-side text-center">Thêm Admin</h2>
+                    <h2 className="title-side text-center">Thêm người dùng</h2>
                     <div>
                         <label htmlFor="fname">Họ tên</label>
                         <input type="text" id="name" name="name" placeholder="Họ tên người dùng"

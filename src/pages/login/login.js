@@ -22,9 +22,9 @@ function Login(props) {
                 .then(function (response) {
                     console.log(response);
                     if (response) {
-
+                        alert('Đăng ký thành công');
                     } else {
-
+                        alert('Đăng ký không thành công');
                     }
                 })
                 .catch(function (error) {

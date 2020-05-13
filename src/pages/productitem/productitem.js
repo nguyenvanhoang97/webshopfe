@@ -1,25 +1,55 @@
 import React, {useEffect, useState} from "react";
-import * as axios from 'axios'
+import * as axios from '../request/index'
 import "./productitem.css"
 import {Container, Row, Col} from "reactstrap";
 
 function ProductItem(props) {
     const [data, setData] = useState([]);
-    console.log(props)
-    const idProduct = props.match.params.id;
-    const idUser = props.match.params.id;
+    const [name, setName] = useState();
+    const [email, setEmail] = useState();
+    const [comment, setComment] = useState();
+    const [dataComment, setDataComment] = useState([]);
+    const id_product = props.match.params.id;
 
-    const getData = async () => {
-        const {data} = await axios('http://localhost:4000/product/' + idProduct);
+    const getProductId = async () => {
+        const {data} = await axios('http://localhost:4000/product/' + id_product);
         setData(data);
     };
+
+    const getComment = async () => {
+        const {data} = await axios('http://localhost:4000/comment/' + id_product);
+        console.log(data)
+        setDataComment(data);
+    };
+
+    const addComment = e => {
+        e.preventDefault()
+
+        axios.post("http://localhost:4000/comment",
+            {
+                id_product, name, email, comment
+            }
+        )
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+
+                } else {
+
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        window.location.reload();
+    }
 
     const addToCart = e => {
         e.preventDefault()
 
         axios.post("http://localhost:4000/cart",
             {
-                idProduct, idUser
+                id_product
             }
         )
             .then(function (response) {
@@ -35,8 +65,9 @@ function ProductItem(props) {
             });
     }
 
-    useEffect(async () => {
-        getData();
+    useEffect(() => {
+        getProductId();
+        getComment();
     }, []);
 
 
@@ -74,28 +105,62 @@ function ProductItem(props) {
                     <Col sm={2}></Col>
                 </div>
                 <Container fluid>
-                    <Col sm={4}></Col>
-                    <Col className="comment" sm={4}>
+                    <Col sm={3}></Col>
+                    <Col className="comment" sm={6}>
                         <h2 className="title-side text-center">Đánh giá</h2>
                         <div>
-                            <label htmlFor="fname">Bình luận</label>
+                            {
+                                dataComment.map((comment, index) => {
+                                    return (
+                                        <Row>
+                                            <div className="comment-main-level">
+                                                <div className="comment-avatar"><img
+                                                    src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg"
+                                                    alt=""/></div>
+                                                <div className="comment-box">
+                                                    <div className="comment-head">
+                                                        <h6 className="comment-name"><a
+                                                            href="http://creaticode.com/blog">{comment.name}</a></h6>
+                                                        <span>{comment.dateCreate}</span>
+                                                    </div>
+                                                    <div className="comment-content">
+                                                        {comment.comment}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Row>
+                                    );
+                                })
+                            }
                         </div>
-                        <form >
+                        <div >
                             <input className="hidden" type="text" id="idProduct" name="" placeholder=""/>
-                            <label htmlFor="fname">First Name</label>
-                            <input type="text" id="fname" name="firstname" placeholder="Your name.."/>
+                            <label htmlFor="fname">Họ tên</label>
+                            <input type="text" id="name" name="name" placeholder="Họ tên"
+                                   required="required"
+                                   value={name}
+                                   onChange={e => setName(e.target.value)}
+                            />
 
-                            <label htmlFor="fname">Email</label>
-                            <input type="text" id="email" name="email" placeholder="Your email.."/>
+                            <label htmlFor="email">Email</label>
+                            <input type="text" id="email" name="email" placeholder="Email"
+                                   required="required"
+                                   value={email}
+                                   onChange={e => setEmail(e.target.value)}
+                            />
 
                             <label htmlFor="subject">Comment</label>
-                            <textarea id="subject" name="subject" placeholder="Write something.."></textarea>
-                            <button type="submit" className="btn-custom">
+                            <textarea id="subject" name="subject" placeholder="Write something.."
+                                      required="required"
+                                      value={comment}
+                                      onChange={e => setComment(e.target.value)}>
+                            </textarea>
+                            <button type="submit" className="btn-custom" onClick={addComment}>
                                 Submit
                             </button>
-                        </form>
+                        </div>
                     </Col>
-                    <Col sm={4}></Col>
+                    <Col sm={3}></Col>
                 </Container>
             </Container>
         </Container>

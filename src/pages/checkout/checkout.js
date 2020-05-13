@@ -6,7 +6,8 @@ function CheckOut() {
     const dataOrder = (order, index) => {
         return (
             <tr key={index}>
-                <td>{order.title}</td>
+                <td>{order.name}</td>
+                <td>{order.amount}</td>
                 <td>{order.price}</td>
             </tr>
         )
@@ -50,6 +51,7 @@ function CheckOut() {
                         <table className="table">
                             <thead>
                                 <th className="text-center">Tên</th>
+                                <th className="text-center">Số lượng</th>
                                 <th className="text-center">Giá</th>
                             </thead>
                             <tbody>
