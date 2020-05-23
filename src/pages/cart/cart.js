@@ -2,7 +2,9 @@ import React, {  } from "react";
 import "./cart.css";
 import {Container, Row, Col} from "reactstrap";
 
-function ContentCart() {
+function ContentCart(props) {
+
+    console.log(props)
 
     const dataProducts = (product, index) => {
         return (

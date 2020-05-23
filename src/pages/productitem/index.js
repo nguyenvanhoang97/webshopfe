@@ -1,77 +1,74 @@
 import React, {useEffect, useState} from "react";
-import * as axios from '../request/index'
-import "./productitem.css"
+import * as axios from 'axios'
+import "./index.css"
 import {Container, Row, Col} from "reactstrap";
 
 function ProductItem(props) {
     const [data, setData] = useState([]);
-    const [name, setName] = useState();
+    const [dataComment, setDataComment] = useState([]);
+    const [nameComment, setNameComment] = useState();
     const [email, setEmail] = useState();
     const [comment, setComment] = useState();
-    const [dataComment, setDataComment] = useState([]);
-    const id_product = props.match.params.id;
+    const idProduct = props.match.params.id;
 
     const getProductId = async () => {
-        const {data} = await axios('http://localhost:4000/product/' + id_product);
-        setData(data);
-    };
-
-    const getComment = async () => {
-        const {data} = await axios('http://localhost:4000/comment/' + id_product);
-        console.log(data)
-        setDataComment(data);
+        try {
+            const {data} = await axios({
+                method: 'GET',
+                url: 'http://localhost:4000/product/' + idProduct,
+                headers: {
+                    'x-access-token': localStorage.getItem('token'),
+                    'Content-Type': 'application/json'
+                },
+                json: true
+            })
+            const dataComment = data.comments
+            setDataComment(dataComment)
+            console.log(dataComment);
+            setData(data);
+        } catch (e) {
+            alert(e.response ? e.response.msg : e.message)
+        }
     };
 
     const addComment = e => {
         e.preventDefault()
 
-        axios.post("http://localhost:4000/comment",
-            {
-                id_product, name, email, comment
-            }
-        )
-            .then(function (response) {
-                console.log(response);
-                if (response) {
-
-                } else {
-
-                }
+        try {
+            axios({
+                method: 'PUT',
+                url: 'http://localhost:4000/comment/' + idProduct,
+                data: {nameComment, email, comment},
+                headers: {
+                    'x-access-token': localStorage.getItem('token'),
+                    'Content-Type': 'application/json'
+                },
+                json: true
             })
-            .catch(function (error) {
-                console.log(error);
-            });
-        window.location.reload();
+        } catch (e) {
+            alert(e.response ? e.response.msg : e.message)
+        }
     }
 
     const addToCart = e => {
         e.preventDefault()
 
-        axios.post("http://localhost:4000/cart",
-            {
-                id_product
-            }
-        )
-            .then(function (response) {
-                console.log(response);
-                if (response) {
-
-                } else {
-
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        axios({
+            method: 'PUT',
+            url: 'http://localhost:4000/cart/' + idProduct,
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            json: true
+        })
     }
 
-    useEffect(() => {
+    useEffect( () => {
         getProductId();
-        getComment();
     }, []);
 
-
-    return(
+    return (
         <Container fluid>
             <Container fluid>
                 <div>
@@ -81,9 +78,9 @@ function ProductItem(props) {
                             <Row>
                                 <Col sm={8} className="product-details-image">
                                     <div className="image-product-detail">
-                                        <img alt={data.name} key={data.id}
-                                             className="image-product-detail"
-                                             src={data.image}/>
+                                        <img alt={data.name} key={data._id}
+                                             className="img-product"
+                                             src={data.image===0?data.image:`http://localhost:4000/file/${data.image}`}/>
                                     </div>
                                 </Col>
                                 <Col sm={4} className="details">
@@ -96,7 +93,8 @@ function ProductItem(props) {
                                     <h4 className="">Mô tả: {data.description} <span></span></h4>
                                     <div className="action">
                                         <button className="btn btn-default btn-custom" type="button"
-                                            onClick={addToCart}>add to cart</button>
+                                                onClick={addToCart}>add to cart
+                                        </button>
                                     </div>
                                 </Col>
                             </Row>
@@ -110,9 +108,9 @@ function ProductItem(props) {
                         <h2 className="title-side text-center">Đánh giá</h2>
                         <div>
                             {
-                                dataComment.map((comment, index) => {
+                                dataComment.map((cmt, index) => {
                                     return (
-                                        <Row>
+                                        <Row key={index}>
                                             <div className="comment-main-level">
                                                 <div className="comment-avatar"><img
                                                     src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg"
@@ -120,11 +118,11 @@ function ProductItem(props) {
                                                 <div className="comment-box">
                                                     <div className="comment-head">
                                                         <h6 className="comment-name"><a
-                                                            href="http://creaticode.com/blog">{comment.name}</a></h6>
-                                                        <span>{comment.dateCreate}</span>
+                                                            href="http://creaticode.com/blog">{cmt.nameComment}</a></h6>
+                                                        <span>{cmt.email}</span>
                                                     </div>
                                                     <div className="comment-content">
-                                                        {comment.comment}
+                                                        {cmt.comment}
                                                     </div>
                                                 </div>
                                             </div>
@@ -133,13 +131,13 @@ function ProductItem(props) {
                                 })
                             }
                         </div>
-                        <div >
+                        <div>
                             <input className="hidden" type="text" id="idProduct" name="" placeholder=""/>
                             <label htmlFor="fname">Họ tên</label>
                             <input type="text" id="name" name="name" placeholder="Họ tên"
                                    required="required"
-                                   value={name}
-                                   onChange={e => setName(e.target.value)}
+                                   value={nameComment}
+                                   onChange={e => setNameComment(e.target.value)}
                             />
 
                             <label htmlFor="email">Email</label>

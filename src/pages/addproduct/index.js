@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import {Container, Col} from "reactstrap";
 import * as axios from "axios";
+import FormData from "form-data";
 
-function AddProduct() {
+function AddProduct(props) {
+    const idProduct = props.match.params.id;
 
     const [name, setName] = useState();
     const [image, setImage] = useState();
@@ -12,12 +14,23 @@ function AddProduct() {
 
     const addProduct = e => {
         e.preventDefault()
+        const data=new FormData()
+        data.append('image',image)
+        data.append('name',name)
+        data.append('price',price)
+        data.append('amount',amount)
+        data.append('description',description)
 
-        axios.post("http://localhost:4000/product",
-            {
-                name, image, price, amount, description
-            }
-        )
+        axios({
+            method: 'POST',
+            url: 'http://localhost:4000/product',
+            data,
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+                'Content-Type': image.type
+            },
+            json: true
+        })
             .then(function (response) {
                 console.log(response);
                 if (response) {
@@ -27,11 +40,52 @@ function AddProduct() {
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
+                alert(error.response.data.msg)
             });
     }
 
-    return(
+    const updateProduct = e => {
+        e.preventDefault()
+        const data=new FormData()
+        data.append('image',image)
+        data.append('name',name)
+        data.append('price',price)
+        data.append('amount',amount)
+        data.append('description',description)
+
+        axios({
+            method: 'PUT',
+            url: 'http://localhost:4000/product/' + idProduct,
+            data,
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+                'Content-Type': image.type
+            },
+            json: true
+        })
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+
+                } else {
+
+                }
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
+    }
+
+    const handleChange = e => {
+        if (e.target.files.length) {
+            setImage(
+                e.target.files[0]
+            );
+        }
+    };
+
+    return (
         <Container fluid>
             <Container fluid>
                 <Col sm={2}></Col>
@@ -45,7 +99,7 @@ function AddProduct() {
                                onChange={e => setName(e.target.value)}/>
 
                         <label htmlFor="fname">Hình ảnh sản phẩm</label>
-                        <input type="file" name="image" id="image" onChange={e => setImage(e.target.files)}/>
+                        <input type="file" name="image" id="image" onChange={handleChange}/>
 
                         <label htmlFor="lname">Giá sản phẩm</label>
                         <input type="text" id="price" name="price" placeholder="Giá sản phẩm"
@@ -68,6 +122,9 @@ function AddProduct() {
 
                         <button type="submit" className="" onClick={addProduct}>
                             Thêm sản phẩm
+                        </button>
+                        <button type="submit" className="" onClick={updateProduct}>
+                            sửa sản phẩm
                         </button>
                     </div>
                 </Col>

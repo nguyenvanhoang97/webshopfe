@@ -3,17 +3,19 @@ import {Container} from "reactstrap";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import Header from "./../components/header/header";
 import Footer from "./../components/footer/footer";
-import HomeContent from "./homecontent/homecontent";
-import BlogContent from "./blogcontent/blogcontent";
-import ProductItem from "./productitem/productitem";
-import Login from "./login/login";
+import HomeContent from "./homecontent/index";
+import BlogContent from "./blogcontent/index";
+import ProductItem from "./productitem/index";
+import Login from "./login/index";
 import ContentCart from "./cart/cart";
-import HomeAdmin from "./homeadmin/homeadmin";
-import AddProduct from "./addproduct/addproduct";
+import HomeAdmin from "./homeadmin/index";
+import AddProduct from "./addproduct/index";
 import AddUser from "./addUser/addUser";
-import UserContent from "./usercontent/usercontent";
-import NewsItem from "./newsitem/newsitem";
+import UserContent from "./usercontent/index";
+import NewsItem from "./newsitem/index";
 import CheckOut from "./checkout/checkout";
+import AddNews from "./addnews/index";
+import NewsContent from "./newscontent/index";
 
 function Main() {
 
@@ -31,7 +33,11 @@ function Main() {
                     <Route path="/home" component={HomeAdmin} />
                     <Route path="/add/product" component={AddProduct} />
                     <Route path="/add/user" component={AddUser} />
+                    <Route path="/add/news" component={AddNews} />
+                    <Route path="/news" component={NewsContent} />
                     <Route path="/edit/user/:id" component={AddUser} />
+                    <Route path="/edit/product/:id" component={AddProduct} />
+                    <Route path="/edit/news/:id" component={AddNews} />
                     <Route path="/user" component={UserContent} />
                     <Route path='/blog/:id' component={NewsItem}/>
                     <Route path="/order" component={CheckOut} />

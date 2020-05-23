@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {Container} from "reactstrap"
-import "./login.css"
+import "./index.css"
 import * as axios from "axios";
-import { Redirect, withRouter } from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 
-function Login(props) {
+function Login() {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPass] = useState('');
@@ -44,9 +44,10 @@ function Login(props) {
         )
             .then(function (response) {
                 console.log(response);
-                if (response.status === 200) {
-                    localStorage.setItem("token", response.token)
-                    if (response.data.user.isAdmin === true) {
+                const {data} = response
+                if (data.ok) {
+                    localStorage.setItem("token", data.token)
+                    if (data.user.isAdmin === true) {
                         setRedirectUrl('/home')
                     } else {
                         setRedirectUrl('/')
@@ -65,9 +66,9 @@ function Login(props) {
             {
                 redirectUrl
                 &&
-                    <Redirect
-                        to={redirectUrl}
-                        />
+                <Redirect
+                    to={redirectUrl}
+                />
             }
             <Container fluid>
                 <div className="wrapper">

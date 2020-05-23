@@ -1,14 +1,26 @@
 import React, {useEffect, useState} from "react";
 import {Container, Col, Table, Button} from "reactstrap";
 import * as axios from "axios";
-import {Redirect} from "react-router-dom";
 
 function UserContent() {
     const [data, setData] = useState([]);
 
     const getData = async () => {
-        const {data} = await axios("http://localhost:4000/user");
-        setData(data);
+        try {
+            const {data} = await axios({
+                method: 'GET',
+                url: "http://localhost:4000/user",
+                headers: {
+                    'x-access-token': localStorage.getItem('token'),
+                    'Content-Type': 'application/json'
+                },
+                json: true
+            })
+            console.log(data);
+            setData(data)
+        } catch (e) {
+            alert(e.response ? e.response.msg : e.message)
+        }
     };
 
     useEffect( () => {
@@ -16,10 +28,15 @@ function UserContent() {
     }, []);
 
     const removeUser = async (idUser) => {
-        await axios({
-            method: 'delete',
-            url: 'http://localhost:4000/user/' + idUser
-        });
+        axios({
+            method: 'DELETE',
+            url: 'http://localhost:4000/user/' + idUser,
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            json: true
+        })
         window.location.reload();
     };
 
@@ -50,14 +67,14 @@ function UserContent() {
                 <Col sm={8}>
                     <Table className="table">
                         <thead>
-                            <th className="text-center">ID</th>
-                            <th className="text-center">Title</th>
-                            <th className="text-center">Image</th>
-                            <th className="text-center">Image</th>
-                            <th></th>
+                        <th className="text-center">ID</th>
+                        <th className="text-center">Title</th>
+                        <th className="text-center">Image</th>
+                        <th className="text-center">Image</th>
+                        <th></th>
                         </thead>
                         <tbody>
-                            {data.map(dataUser)}
+                        {data.map(dataUser)}
                         </tbody>
                     </Table>
                     <Button className="btn-custom" href="/add/user">Thêm người dùng</Button>

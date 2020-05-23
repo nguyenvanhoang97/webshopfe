@@ -11,17 +11,16 @@ function AddUser(props) {
     const [isAdmin, setAdmin] = useState(false);
     const submit = e => {
         e.preventDefault()
-        axios.post("http://localhost:4000/user",
-            {
-                name, username, password, isAdmin
-            }
-        )
-            .then(function (response) {
-                console.log(response);
-                })
-            .catch(function (error) {
-                console.log(error);
-            });
+        axios({
+            method: 'POST',
+            url: 'http://localhost:4000/user',
+            data: {name, username, isAdmin, password},
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            json: true
+        });
         window.location.replace('http://localhost:3000/user');
     }
 
@@ -29,6 +28,21 @@ function AddUser(props) {
         const {data} = await axios('http://localhost:4000/user/' + idUser);
         console.log(data)
     };
+
+    const updateUser = e => {
+        e.preventDefault()
+
+        axios({
+            method: 'PUT',
+            url: 'http://localhost:4000/user/' + idUser,
+            data: {name, username, isAdmin, password},
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            json: true
+        })
+    }
 
     useEffect( () => {
         getUserById();
@@ -69,6 +83,9 @@ function AddUser(props) {
 
                         <button type="button" className="btn-custom" onClick={submit}>
                             Thêm Admin
+                        </button>
+                        <button type="button" className="btn-custom" onClick={updateUser}>
+                            Sửa
                         </button>
                     </div>
                 </Col>

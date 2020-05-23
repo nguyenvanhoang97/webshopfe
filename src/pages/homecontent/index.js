@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Container, Row, Col} from "reactstrap"
 import * as axios from 'axios'
-import "./homecontent.css"
+import "./index.css"
 
 function HomeContent() {
     const [dataShow, setDataShow] = useState([]);
@@ -9,11 +9,18 @@ function HomeContent() {
     const [search, setSearch] = useState([]);
 
     const getData = async () => {
-        axios.defaults.withCredentials = true
         try {
-            const {data} = await axios("http://localhost:4000/product");
-            setDataShow(data);
+            const {data} = await axios({
+                method: 'GET',
+                url: "http://localhost:4000/product",
+                headers: {
+                    'x-access-token': localStorage.getItem('token'),
+                    'Content-Type': 'application/json'
+                },
+                json: true
+            })
             console.log(data);
+            setDataShow(data);
             setDataFull(data);
         } catch (e) {
             alert(e.response ? e.response.msg : e.message)
@@ -103,12 +110,12 @@ function HomeContent() {
 
                                                     <img alt={product.name} key={product._id}
                                                          className="img-product"
-                                                         src={product.image}/>
+                                                         src={product.image.indexOf('http')===0?product.image:`http://localhost:4000/file/${product.image}`}/>
 
                                                     <h3 className="title-side text-center">{product.name}</h3>
                                                 </a>
                                                 <h3 className="text-center">Giá: {product.price} vnđ</h3>
-                                                <button className="btn-custom product-btn">Add to cart</button>
+                                                <button className="btn-custom product-btn" >Add to cart</button>
                                             </div>
                                         </Col>
                                     );

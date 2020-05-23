@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Container, Col, Table} from "reactstrap";
-import "./homeadmin.css"
+import "./index.css"
 import * as axios from "axios";
 import {Button} from "react-bootstrap";
 
@@ -8,7 +8,15 @@ function HomeAdmin() {
     const [data, setData] = useState([]);
 
     const getData = async () => {
-        const {data} = await axios("http://localhost:4000/product");
+        const {data} = await axios({
+            method: 'GET',
+            url: 'http://localhost:4000/product/',
+            headers: {
+                'x-access-token': localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            json: true
+        })
         setData(data);
     };
 
@@ -24,6 +32,10 @@ function HomeAdmin() {
         window.location.reload();
     };
 
+    const editProduct = async (idProduct) => {
+        window.location.replace('http://localhost:3000/edit/product/'+ idProduct);
+    };
+
     const dataProducts = (product, index) => {
         return (
             <tr key={index}>
@@ -32,7 +44,7 @@ function HomeAdmin() {
                 <td><img className="image-table" src={product.image}/></td>
                 <td>{product.url}</td>
                 <td>
-                    <button className="btn-custom">Edit</button>
+                    <button className="btn-custom" onClick={() => editProduct(product._id)}>Edit</button>
                     <button className="btn-custom" onClick={() => removeProduct(product._id)}>Delete</button>
                 </td>
             </tr>
@@ -54,7 +66,7 @@ function HomeAdmin() {
                         <th></th>
                         </thead>
                         <tbody>
-                            {data.map(dataProducts)}
+                        {data.map(dataProducts)}
                         </tbody>
                     </Table>
                     <Button href="/add/product" className="btn-custom">Thêm Sản Phẩm</Button>
