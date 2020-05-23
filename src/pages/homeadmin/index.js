@@ -1,22 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Container, Col, Table} from "reactstrap";
 import "./index.css"
-import * as axios from "axios";
 import {Button} from "react-bootstrap";
+import Request from "../../utils/request";
 
 function HomeAdmin() {
     const [data, setData] = useState([]);
 
     const getData = async () => {
-        const {data} = await axios({
-            method: 'GET',
-            url: 'http://localhost:4000/product/',
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-                'Content-Type': 'application/json'
-            },
-            json: true
-        })
+        const {data} = await Request.get('http://localhost:4000/product/')
         setData(data);
     };
 
@@ -25,10 +17,7 @@ function HomeAdmin() {
     }, []);
 
     const removeProduct = async (idProduct) => {
-        await axios({
-            method: 'delete',
-            url: 'http://localhost:4000/product/' + idProduct
-        });
+        await Request.delete('http://localhost:4000/product/' + idProduct)
         window.location.reload();
     };
 

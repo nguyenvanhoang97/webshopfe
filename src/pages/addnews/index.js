@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Container, Col} from "reactstrap";
-import * as axios from "axios";
+import Request from "../../utils/request";
 
 function AddNews(props) {
     const idNews = props.match.params.id;
@@ -10,58 +10,14 @@ function AddNews(props) {
 
     const addNews = e => {
         e.preventDefault()
-
-        axios({
-            method: 'POST',
-            url: 'http://localhost:4000/news',
-            data: {
-                name, content
-            },
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-                'Content-Type': 'application/json'
-            },
-            json: true
-        })
-            .then(function (response) {
-                console.log(response);
-                if (response) {
-
-                } else {
-
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        Request.post('http://localhost:4000/news',{name, content})
+        window.location.replace('http://localhost:3000/news')
     }
 
     const updateNews = e => {
         e.preventDefault()
-
-        axios({
-            method: 'PUT',
-            url: 'http://localhost:4000/news/' + idNews,
-            data: {
-                name, content
-            },
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-                'Content-Type': 'application/json'
-            },
-            json: true
-        })
-            .then(function (response) {
-                console.log(response);
-                if (response) {
-
-                } else {
-
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        Request.put('http://localhost:4000/news/' + idNews,{name, content})
+        window.location.replace('http://localhost:3000/news')
     }
 
     return(

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Container, Col} from "reactstrap";
-import * as axios from 'axios'
+import Request from "../../utils/request";
 
 function AddUser(props) {
     console.log(props)
@@ -9,39 +9,22 @@ function AddUser(props) {
     const [username, setUsername] = useState('');
     const [password, setPass] = useState('');
     const [isAdmin, setAdmin] = useState(false);
+
     const submit = e => {
         e.preventDefault()
-        axios({
-            method: 'POST',
-            url: 'http://localhost:4000/user',
-            data: {name, username, isAdmin, password},
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-                'Content-Type': 'application/json'
-            },
-            json: true
-        });
+        Request.post('http://localhost:4000/user', {name, username, isAdmin, password})
         window.location.replace('http://localhost:3000/user');
     }
 
     const getUserById = async () => {
-        const {data} = await axios('http://localhost:4000/user/' + idUser);
+        const {data} = await Request.get('http://localhost:4000/user/' + idUser);
         console.log(data)
     };
 
     const updateUser = e => {
         e.preventDefault()
-
-        axios({
-            method: 'PUT',
-            url: 'http://localhost:4000/user/' + idUser,
-            data: {name, username, isAdmin, password},
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-                'Content-Type': 'application/json'
-            },
-            json: true
-        })
+        Request.put('http://localhost:4000/user/' + idUser,{name, username, isAdmin, password})
+        window.location.replace('http://localhost:3000/user');
     }
 
     useEffect( () => {

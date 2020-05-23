@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {Container} from "reactstrap"
 import "./index.css"
-import * as axios from "axios";
 import {Redirect, withRouter} from 'react-router-dom';
+import Request from "../../utils/request";
 
 function Login() {
     const [name, setName] = useState('');
@@ -14,22 +14,7 @@ function Login() {
     const register = e => {
         if (cpassword === password) {
             e.preventDefault()
-            axios.post("http://localhost:4000/user",
-                {
-                    name, username, password, isAdmin
-                }
-            )
-                .then(function (response) {
-                    console.log(response);
-                    if (response) {
-                        alert('Đăng ký thành công');
-                    } else {
-                        alert('Đăng ký không thành công');
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            Request.post("http://localhost:4000/user", {name, username, password, isAdmin})
         } else {
             alert('Mật khẩu không trùng khớp');
         }
@@ -37,11 +22,7 @@ function Login() {
 
     const login = e => {
         e.preventDefault()
-        axios.post("http://localhost:4000/user/login",
-            {
-                username, password
-            }
-        )
+        Request.post("http://localhost:4000/user/login", {username, password})
             .then(function (response) {
                 console.log(response);
                 const {data} = response

@@ -1,27 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {Container, Row, Col} from "reactstrap";
 import "./index.css"
-import * as axios from "axios";
+import Request from "../../utils/request";
 
 function BlogContent() {
     const [dataShow, setDataShow] = useState([]);
 
     const getData = async () => {
-        try {
-            const {data} = await axios({
-                method: 'GET',
-                url: "http://localhost:4000/news",
-                headers: {
-                    'x-access-token': localStorage.getItem('token'),
-                    'Content-Type': 'application/json'
-                },
-                json: true
-            })
-            console.log(data);
-            setDataShow(data);
-        } catch (e) {
-            alert(e.response ? e.response.msg : e.message)
-        }
+        const {data}= Request.get("http://localhost:4000/news")
+        console.log(data);
+        setDataShow(data);
     };
 
     useEffect(() => {

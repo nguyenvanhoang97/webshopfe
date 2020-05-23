@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Container, Col} from "reactstrap";
 import * as axios from "axios";
 import FormData from "form-data";
+import Request from "../../utils/request";
 
 function AddProduct(props) {
     const idProduct = props.match.params.id;
@@ -20,29 +21,8 @@ function AddProduct(props) {
         data.append('price',price)
         data.append('amount',amount)
         data.append('description',description)
-
-        axios({
-            method: 'POST',
-            url: 'http://localhost:4000/product',
-            data,
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-                'Content-Type': image.type
-            },
-            json: true
-        })
-            .then(function (response) {
-                console.log(response);
-                if (response) {
-
-                } else {
-
-                }
-            })
-            .catch(function (error) {
-                console.log(error.response);
-                alert(error.response.data.msg)
-            });
+        Request.post('http://localhost:4000/product', data)
+        window.location.replace('http://localhost:3000/home')
     }
 
     const updateProduct = e => {
@@ -53,28 +33,8 @@ function AddProduct(props) {
         data.append('price',price)
         data.append('amount',amount)
         data.append('description',description)
-
-        axios({
-            method: 'PUT',
-            url: 'http://localhost:4000/product/' + idProduct,
-            data,
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-                'Content-Type': image.type
-            },
-            json: true
-        })
-            .then(function (response) {
-                console.log(response);
-                if (response) {
-
-                } else {
-
-                }
-            })
-            .catch(function (error) {
-                console.log(error.response);
-            });
+        Request.put('http://localhost:4000/product/' + idProduct, data)
+        window.location.replace('http://localhost:3000/home')
     }
 
     const handleChange = e => {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Container, Row, Col} from "reactstrap"
-import * as axios from 'axios'
 import "./index.css"
+import Request from "../../utils/request";
 
 function HomeContent() {
     const [dataShow, setDataShow] = useState([]);
@@ -9,22 +9,10 @@ function HomeContent() {
     const [search, setSearch] = useState([]);
 
     const getData = async () => {
-        try {
-            const {data} = await axios({
-                method: 'GET',
-                url: "http://localhost:4000/product",
-                headers: {
-                    'x-access-token': localStorage.getItem('token'),
-                    'Content-Type': 'application/json'
-                },
-                json: true
-            })
-            console.log(data);
-            setDataShow(data);
-            setDataFull(data);
-        } catch (e) {
-            alert(e.response ? e.response.msg : e.message)
-        }
+        const {data} = await Request.get("http://localhost:4000/product")
+        console.log(data);
+        setDataShow(data);
+        setDataFull(data);
     };
 
     useEffect(() => {

@@ -1,26 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {Container, Col, Table, Button} from "reactstrap";
 import * as axios from "axios";
+import Request from "../../utils/request";
 
 function NewsContent() {
     const [data, setData] = useState([]);
 
     const getData = async () => {
-        try {
-            const {data} = await axios({
-                method: 'GET',
-                url: "http://localhost:4000/news",
-                headers: {
-                    'x-access-token': localStorage.getItem('token'),
-                    'Content-Type': 'application/json'
-                },
-                json: true
-            })
-            console.log(data);
-            setData(data)
-        } catch (e) {
-            alert(e.response ? e.response.msg : e.message)
-        }
+        const {data} = await Request.get("http://localhost:4000/news")
+        console.log(data);
+        setData(data)
     };
 
     useEffect( () => {
@@ -28,15 +17,7 @@ function NewsContent() {
     }, []);
 
     const removeNews = async (idNews) => {
-        axios({
-            method: 'DELETE',
-            url: 'http://localhost:4000/news/' + idNews,
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-                'Content-Type': 'application/json'
-            },
-            json: true
-        })
+        Request.delete('http://localhost:4000/news/' + idNews)
         window.location.reload();
     };
 

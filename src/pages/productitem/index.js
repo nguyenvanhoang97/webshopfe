@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import * as axios from 'axios'
 import "./index.css"
 import {Container, Row, Col} from "reactstrap";
+import Request from "../../utils/request";
 
 function ProductItem(props) {
     const [data, setData] = useState([]);
@@ -12,56 +13,22 @@ function ProductItem(props) {
     const idProduct = props.match.params.id;
 
     const getProductId = async () => {
-        try {
-            const {data} = await axios({
-                method: 'GET',
-                url: 'http://localhost:4000/product/' + idProduct,
-                headers: {
-                    'x-access-token': localStorage.getItem('token'),
-                    'Content-Type': 'application/json'
-                },
-                json: true
-            })
-            const dataComment = data.comments
-            setDataComment(dataComment)
-            console.log(dataComment);
-            setData(data);
-        } catch (e) {
-            alert(e.response ? e.response.msg : e.message)
-        }
+        const {data} = await Request.get('http://localhost:4000/product/' + idProduct)
+        const dataComment = data.comments
+        setDataComment(dataComment)
+        console.log(dataComment);
+        setData(data);
     };
 
     const addComment = e => {
         e.preventDefault()
-
-        try {
-            axios({
-                method: 'PUT',
-                url: 'http://localhost:4000/comment/' + idProduct,
-                data: {nameComment, email, comment},
-                headers: {
-                    'x-access-token': localStorage.getItem('token'),
-                    'Content-Type': 'application/json'
-                },
-                json: true
-            })
-        } catch (e) {
-            alert(e.response ? e.response.msg : e.message)
-        }
+        Request.put('http://localhost:4000/comment/' + idProduct, {nameComment, email, comment})
+        window.location.reload();
     }
 
     const addToCart = e => {
         e.preventDefault()
 
-        axios({
-            method: 'PUT',
-            url: 'http://localhost:4000/cart/' + idProduct,
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-                'Content-Type': 'application/json'
-            },
-            json: true
-        })
     }
 
     useEffect( () => {
