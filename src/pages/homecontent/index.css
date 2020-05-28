@@ -579,8 +579,8 @@ h2.title {
     vertical-align: top;
 }
 
-.img-product {
-    width: 400px;
+.img-product-content {
+    width: 92%;
     height: 400px;
     margin-bottom: 20px;
 }

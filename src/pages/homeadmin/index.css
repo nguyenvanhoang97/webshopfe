@@ -509,3 +509,7 @@
     border: solid;
     border-color: #C2C2C1;
 }
+.image-table {
+    height: 300px;
+    width: 300px;
+}

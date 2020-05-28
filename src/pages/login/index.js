@@ -37,9 +37,6 @@ function Login() {
                     alert('Đăng nhập không thành công!')
                 }
             })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
 
     return (

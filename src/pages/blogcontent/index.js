@@ -7,7 +7,7 @@ function BlogContent() {
     const [dataShow, setDataShow] = useState([]);
 
     const getData = async () => {
-        const {data}= Request.get("http://localhost:4000/news")
+        const {data}= await Request.get("http://localhost:4000/news")
         console.log(data);
         setDataShow(data);
     };
@@ -38,35 +38,34 @@ function BlogContent() {
                     </Col>
 
                     <Col sm={9} className="padding-right">
-                        <div className="features_items">
+                        <div className="product-item">
                             <h2 className="title-side text-center">
                                 News
                             </h2>
-                            <Row>
-                                {dataShow.map((blog, index) => {
-                                    return <Col sm={3}>
-                                        <a href={"/blog/" + blog._id}>
-                                            <div className="card">
-                                                <div className="wrapper">
-                                                    <div className="header">
-                                                        <div className="date">
-                                                            {blog.dateCreate}
+                                {
+                                    dataShow.map((blog, index) => {
+                                        return (
+                                            <Row className="card">
+                                                <Col sm={4}>
+                                                    <img alt="Ảnh tiêu đề" src={blog.image}/>
+                                                </Col>
+                                                <Col sm={8}>
+                                                    <h4 className="title-side text-center">{blog.name}</h4>
+                                                    <div className="">
+                                                        <div className="data">
+                                                            <div className="content">
+                                                                <p className="text">{blog.content}</p>
+                                                            </div>
+                                                            <div className="text-center">
+                                                                <a href={"/blog/" + blog._id} className="button" >Read more</a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div className="data">
-                                                        <div className="content">
-                                                            <img alt="Ảnh tiêu đề" src={blog.image}/>
-                                                            <span className="author">{blog.name}</span>
-                                                            <p className="text">{blog.content}</p>
-                                                            <a href="/news" className="button" >Read more</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </Col>
-                                })}
-                            </Row>
+                                                </Col>
+                                            </Row>
+                                        );
+                                    })
+                                }
                         </div>
                     </Col>
                 </div>

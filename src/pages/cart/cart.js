@@ -49,7 +49,7 @@ function ContentCart(props) {
                         <div className="totals">
 
                         </div>
-                        <button className="checkout btn-custom">Checkout</button>
+                        <button className="checkout btn-custom"><a>Check out</a></button>
                     </Row>
                 </Col>
                 <Col sm={2}></Col>

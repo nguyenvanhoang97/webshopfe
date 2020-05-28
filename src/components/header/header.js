@@ -44,8 +44,7 @@ function Header(props) {
                                     <li><a href="/user">NGƯỜI DÙNG</a></li>
                                     <li><a href="/news">BÀI VIẾT</a></li>
                                     <li><a href="/order">ĐƠN HÀNG</a></li>
-                                    <li><a href="/blog">TIN TỨC</a></li>
-                                    <li><a href="/contact">LIÊN HỆ</a></li>
+                                    <li><a href="/blogs">TIN TỨC</a></li>
                                 </ul>
                             </div>
                         </Col>
@@ -88,7 +87,6 @@ function Header(props) {
                         <ul className="nav navbar-nav collapse navbar-collapse">
                             <li><a href="/" className="active">TRANG CHỦ</a></li>
                             <li><a href="/blog">BÀI VIẾT<i></i></a></li>
-                            <li><a href="/contact"><i></i></a></li>
                         </ul>
                     </div>
                 </Col>

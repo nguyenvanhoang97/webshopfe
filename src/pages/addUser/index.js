@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Container, Col} from "reactstrap";
+import {Container, Col, Row} from "reactstrap";
 import Request from "../../utils/request";
 
 function AddUser(props) {
     console.log(props)
     const idUser = props.match.params.id;
+
+    const [data, setData] = useState([])
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPass] = useState('');
@@ -18,7 +20,7 @@ function AddUser(props) {
 
     const getUserById = async () => {
         const {data} = await Request.get('http://localhost:4000/user/' + idUser);
-        console.log(data)
+        setData(data)
     };
 
     const updateUser = e => {
@@ -33,41 +35,42 @@ function AddUser(props) {
 
     return (
         <Container fluid>
-            <Container fluid>
+            <Container className="comment-form" fluid>
                 <Col sm={2}></Col>
                 <Col sm={8}>
                     <h2 className="title-side text-center">Thêm người dùng</h2>
                     <div>
-                        <label htmlFor="fname">Họ tên</label>
+                        <h3 htmlFor="fname">Họ tên</h3>
                         <input type="text" id="name" name="name" placeholder="Họ tên người dùng"
                                required="required"
-                               value={name}
+                               value={data.name}
                                onChange={e => setName(e.target.value)}
                         />
 
-                        <label htmlFor="lname">Username</label>
+                        <h3 htmlFor="lname">Username</h3>
                         <input type="text" id="uname" name="username" placeholder="Tên đăng nhập"
                                required="required"
-                               value={username}
+                               value={data.username}
                                onChange={e => setUsername(e.target.value)}
                         />
 
-                        <label htmlFor="lname">Password ( tối thiểu 6 kí tự )</label>
+                        <h3 htmlFor="lname">Password ( tối thiểu 6 kí tự )</h3>
                         <input type="text" id="pass" name="password" placeholder="Mật khẩu"
                                required="required"
-                               value={password}
+                               value={data.password}
                                onChange={e => setPass(e.target.value)}
                         />
 
+                        <h3 htmlFor="">Check admin</h3>
                         <label className="checkbox">
                             <input type="checkbox" value="true" id="isadmin" name="isAdmin"
                                    onChange={e => setAdmin(JSON.parse(e.target.value))}/> Check admin
                         </label>
 
-                        <button type="button" className="btn-custom" onClick={submit}>
-                            Thêm Admin
+                        <button type="button" className="btn-custom btn-comment-form" onClick={submit}>
+                            Thêm
                         </button>
-                        <button type="button" className="btn-custom" onClick={updateUser}>
+                        <button type="button" className="btn-custom btn-comment-form" onClick={updateUser}>
                             Sửa
                         </button>
                     </div>

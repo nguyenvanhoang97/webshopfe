@@ -84,7 +84,6 @@ function HomeContent() {
 
                 <Col sm={9} className="">
                     <div className="productlist">
-
                         <h2 className="title-side text-center">
                             Danh mục sản phẩm
                         </h2>
@@ -97,7 +96,7 @@ function HomeContent() {
                                                 <a href={"/product/" + product._id}>
 
                                                     <img alt={product.name} key={product._id}
-                                                         className="img-product"
+                                                         className="img-product-content"
                                                          src={product.image.indexOf('http')===0?product.image:`http://localhost:4000/file/${product.image}`}/>
 
                                                     <h3 className="title-side text-center">{product.name}</h3>
