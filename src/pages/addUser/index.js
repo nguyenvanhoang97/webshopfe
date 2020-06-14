@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Container, Col, Row} from "reactstrap";
+import {Container, Col} from "reactstrap";
 import Request from "../../utils/request";
 
 function AddUser(props) {
-    console.log(props)
+    const isAdd = props.match.path === '/add/user'
     const idUser = props.match.params.id;
 
     const [data, setData] = useState([])
@@ -12,20 +12,24 @@ function AddUser(props) {
     const [password, setPass] = useState('');
     const [isAdmin, setAdmin] = useState(false);
 
-    const submit = e => {
+    const addUser = async (e) => {
         e.preventDefault()
-        Request.post('http://localhost:4000/user', {name, username, isAdmin, password})
-        window.location.replace('http://localhost:3000/user');
+        await Request.post('user', {name, username, isAdmin, password})
+        window.location.replace('/user');
     }
 
     const getUserById = async () => {
-        const {data} = await Request.get('http://localhost:4000/user/' + idUser);
+        const {data} = await Request.get('user/' + idUser);
+        setName(data.name)
+        setUsername(data.username)
+        setAdmin(data.isAdmin)
+        setPass(data.password)
         setData(data)
     };
 
-    const updateUser = e => {
+    const updateUser = async (e) => {
         e.preventDefault()
-        Request.put('http://localhost:4000/user/' + idUser,{name, username, isAdmin, password})
+        await Request.put('user/' + idUser,{name, username, password, isAdmin})
         window.location.replace('http://localhost:3000/user');
     }
 
@@ -34,45 +38,46 @@ function AddUser(props) {
     }, []);
 
     return (
-        <Container fluid>
+        <Container fluid className="container-body">
             <Container className="comment-form" fluid>
                 <Col sm={2}></Col>
                 <Col sm={8}>
-                    <h2 className="title-side text-center">Thêm người dùng</h2>
+                    {isAdd && <h2 className="title-side text-center">Thêm người dùng</h2>}
+                    {!isAdd && <h2 className="title-side text-center">Sửa thông tin người dùng</h2>}
                     <div>
                         <h3 htmlFor="fname">Họ tên</h3>
                         <input type="text" id="name" name="name" placeholder="Họ tên người dùng"
-                               required="required"
-                               value={data.name}
+                               required={true}
+                               value={name}
                                onChange={e => setName(e.target.value)}
                         />
 
                         <h3 htmlFor="lname">Username</h3>
                         <input type="text" id="uname" name="username" placeholder="Tên đăng nhập"
-                               required="required"
-                               value={data.username}
+                               required={true}
+                               value={username}
                                onChange={e => setUsername(e.target.value)}
                         />
 
-                        <h3 htmlFor="lname">Password ( tối thiểu 6 kí tự )</h3>
-                        <input type="text" id="pass" name="password" placeholder="Mật khẩu"
-                               required="required"
-                               value={data.password}
+                        {isAdd && <h3 htmlFor="lname">Password ( tối thiểu 6 kí tự )</h3>}
+                        {isAdd && <input type="text" id="pass" name="password" placeholder="Mật khẩu"
+                               required={true}
+                               value={password}
                                onChange={e => setPass(e.target.value)}
-                        />
+                        />}
 
                         <h3 htmlFor="">Check admin</h3>
                         <label className="checkbox">
-                            <input type="checkbox" value="true" id="isadmin" name="isAdmin"
-                                   onChange={e => setAdmin(JSON.parse(e.target.value))}/> Check admin
+                            {<input type="checkbox" value={isAdmin} id="isadmin" name="isAdmin" checked={isAdmin}
+                                   onChange={e => setAdmin(JSON.parse(e.target.value))}/>} Check admin
                         </label>
 
-                        <button type="button" className="btn-custom btn-comment-form" onClick={submit}>
+                        {isAdd && <button type="button" className="btn-custom btn-comment-form" onClick={addUser}>
                             Thêm
-                        </button>
-                        <button type="button" className="btn-custom btn-comment-form" onClick={updateUser}>
+                        </button>}
+                        {!isAdd && <button type="button" className="btn-custom btn-comment-form" onClick={updateUser}>
                             Sửa
-                        </button>
+                        </button>}
                     </div>
                 </Col>
                 <Col sm={2}></Col>

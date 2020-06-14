@@ -6,7 +6,7 @@ import HomeContent from "./homecontent/index";
 import BlogContent from "./blogcontent/index";
 import ProductItem from "./productitem/index";
 import Login from "./login/index";
-import ContentCart from "./cart/cart";
+import ContentCart from "./cart/index";
 import HomeAdmin from "./homeadmin/index";
 import AddProduct from "./addproduct/index";
 import AddUser from "./addUser/index";
@@ -16,6 +16,7 @@ import AddNews from "./addnews/index";
 import NewsContent from "./newscontent/index";
 import BlogItem from "./blogitem";
 import OrderContent from "./ordercontent";
+import Footer from "../components/footer/footer";
 
 function Main() {
 
@@ -29,7 +30,7 @@ function Main() {
                     <Route path='/product/:id' component={ProductItem}/>
                     <Route path='/blog/:id' component={BlogItem}/>
                     <Route path="/login" component={Login}/>
-                    <Route path="/admin" component={Login}/>
+                    <Route path="/register" component={Login}/>
                     <Route path="/cart" component={ContentCart} />
                     <Route path="/home" component={HomeAdmin} />
                     <Route path="/add/product" component={AddProduct} />
@@ -44,6 +45,7 @@ function Main() {
                     <Route path="/order" component={OrderContent} />
                 </Router>
             </Container>
+            <Footer/>
         </div>
     )
 }

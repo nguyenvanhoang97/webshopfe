@@ -4,78 +4,104 @@ import Request from "../../utils/request";
 import FormData from "form-data";
 
 function AddNews(props) {
+    const isAdd = props.match.path === '/add/news'
     const idNews = props.match.params.id;
 
     const [data, setData] = useState([])
-    const [name, setName] = useState();
-    const [image, setImage] = useState();
-    const [content, setContent] = useState();
+    const [name, setName] = useState('');
+    const [image, setImage] = useState({ preview: "", raw: "" });
+    const [content, setContent] = useState('');
 
-    const addNews = e => {
+    const addNews = async (e) => {
         e.preventDefault()
-        const data=new FormData()
-        data.append('image',image)
-        data.append('name',name)
-        data.append('content',content)
-        Request.post('http://localhost:4000/news', data)
+        const data = new FormData()
+        data.append('image', image.raw)
+        data.append('name', name)
+        data.append('content', content)
+        await Request.post('news', data)
         window.location.replace('http://localhost:3000/news')
     }
 
-    const updateNews = e => {
+    const updateNews = async e => {
         e.preventDefault()
-        const data=new FormData()
-        data.append('image',image)
-        data.append('name',name)
-        data.append('content',content)
-        Request.put('http://localhost:4000/news' + idNews, data)
+        const data = new FormData()
+        data.append('image', image.raw)
+        data.append('name', name)
+        data.append('content', content)
+        await Request.put('news/' + idNews, data)
         window.location.replace('http://localhost:3000/news')
     }
 
     const getNewsId = async () => {
-        const {data} = await Request.get('http://localhost:4000/news/' + idNews)
+        const {data} = await Request.get('news/' + idNews)
+        setImage({
+            raw: data.image,
+            preview: data.image.indexOf('http')===0?data.image:`http://localhost:4000/file/${data.image}`
+        })
+        setName(data.name)
+        setContent(data.content)
         setData(data);
     };
 
-    useEffect( () => {
-        getNewsId();
+    useEffect(() => {
+        getNewsId()
     }, []);
 
     const handleChange = e => {
         if (e.target.files.length) {
-            setImage(
-                e.target.files[0]
-            );
+            setImage({
+                preview: URL.createObjectURL(e.target.files[0]),
+                raw: e.target.files[0]
+            });
         }
     };
 
-    return(
-        <Container fluid>
+    return (
+        <Container fluid className="container-body">
             <Container fluid className="comment-form">
                 <Col sm={2}></Col>
                 <Col sm={8}>
-                    <h2 className="title-side text-center">Thêm bài viết</h2>
+                    {isAdd && <h2 className="title-side text-center">Thêm bài viết</h2>}
+                    {!isAdd && <h2 className="title-side text-center">Sửa bài viết</h2>}
                     <div>
                         <label htmlFor="">Tiêu đề bài viết</label>
                         <input type="text" id="name" name="name" placeholder="Tên sản phẩm"
-                               required="required"
-                               value={data.name}
+                               required={true}
+                               value={name}
                                onChange={e => setName(e.target.value)}/>
 
-                        <label htmlFor="">Hình ảnh sản phẩm</label>
-                        <input type="file" name="image" id="image" onChange={handleChange}/>
+                        <label htmlFor="">Hình ảnh</label>
+
+                        <div>
+                            <label htmlFor="upload-button">
+                                {image.preview ? (
+                                    <img src={image.preview} alt="dummy" width="300" height="300" />
+                                ) : (
+                                    <>
+                                        <h5 className="text-center">Upload your photo</h5>
+                                    </>
+                                )}
+                            </label>
+                            <input
+                                type="file"
+                                id="upload-button"
+                                style={{ display: "none" }}
+                                onChange={handleChange}
+                            />
+                        </div>
 
                         <label htmlFor="subject">Nội dung bài viết</label>
-                        <textarea id="content" name="content" placeholder="Mô tả chi tiết"
-                                  required="required"
-                                  value={data.content}
+                        <textarea style={{height: '400px'}} id="content" name="content" placeholder="Mô tả chi tiết"
+                                  required={true}
+                                  value={content}
                                   onChange={e => setContent(e.target.value)}>
                         </textarea>
-                        <button type="submit" className="btn-custom btn-comment-form" onClick={addNews}>
+                        {isAdd && <button type="submit" className="btn-custom btn-comment-form" onClick={addNews}>
                             Thêm bài viết
-                        </button>
-                        <button type="submit" className="btn-custom btn-comment-form" onClick={updateNews}>
+                        </button>}
+                        {!isAdd && <button type="submit" className="btn-custom btn-comment-form" onClick={updateNews}>
                             Sửa bài viết
-                        </button>
+                        </button>}
                     </div>
                 </Col>
                 <Col sm={2}></Col>

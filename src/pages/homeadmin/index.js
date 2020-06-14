@@ -5,22 +5,45 @@ import 'moment-timezone';
 import "./index.css"
 import {Button} from "react-bootstrap";
 import Request from "../../utils/request";
+import Paginator from "react-hooks-paginator";
 
 function HomeAdmin() {
-    const [data, setData] = useState([]);
+    const [dataShow, setDataShow] = useState([]);
+    const [dataFull, setDataFull] = useState([]);
+    const [search, setSearch] = useState([]);
+    const pageLimit = 10;
+
+    const [offset, setOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentData, setCurrentData] = useState([]);
 
     const getData = async () => {
-        const {data} = await Request.get('http://localhost:4000/product')
-        console.log(data)
-        setData(data);
+        const {data} = await Request.get('product')
+        setDataShow(data);
+        setDataFull(data);
+    };
+
+    const searchProduct = async (search) => {
+        if (search && search.length) {
+            const {data} = await Request.get("search/product/?q=" + search)
+            console.log(data)
+            setDataShow(data)
+        } else {
+            setDataShow(dataFull);
+        }
     };
 
     useEffect( () => {
         getData();
+        searchProduct();
     }, []);
 
+    useEffect(() => {
+        setCurrentData(dataShow.slice(offset, offset + pageLimit));
+    }, [offset, dataShow]);
+
     const removeProduct = async (idProduct) => {
-        Request.delete('http://localhost:4000/product/'+ idProduct)
+        await Request.delete('product/'+ idProduct)
         window.location.reload();
     };
 
@@ -32,7 +55,7 @@ function HomeAdmin() {
         return (
             <tr key={index}>
                 <td className="text-center hidden">{product._id}</td>
-                <td className="text-center"></td>
+                <td className="text-center">{index+1}</td>
                 <td className="text-center">{product.name}</td>
                 <td className="text-center"><img className="image-table" src={product.image.indexOf('http')===0?product.image:`http://localhost:4000/file/${product.image}`}/></td>
                 <td className="text-center">{product.price} vnđ</td>
@@ -48,7 +71,7 @@ function HomeAdmin() {
     }
 
     return(
-        <Container fluid>
+        <Container fluid className="container-body">
             <Container fluid className="comment-form">
                 <h2 className="title-side text-center">Danh mục sản phẩm</h2>
                 <Col sm={1}></Col>
@@ -63,12 +86,26 @@ function HomeAdmin() {
                         <th style={{width: '12%'}} className="text-center">Ngày tạo</th>
                         <th style={{width: '12%'}} className="text-center">Ngày cập nhật</th>
                         <th style={{width: '11%'}} className="table-search text-center">
-                            <input />
-                            <button className="btn-custom">Search</button>
+                            <input style={{width: 'auto'}} type="text" id="search" name="search" placeholder="Tên sản phẩm"
+                                   required="required"
+                                   value={search}
+                                   onChange={e => setSearch(e.target.value)}/>
+                            <button className="btn-custom" type={"button"}
+                                    onClick={() => searchProduct(search)}>
+                                Search
+                            </button>
                         </th>
                         </thead>
                         <tbody>
-                        {data.map(dataProducts)}
+                        {currentData.map(dataProducts)}
+                        <Paginator
+                            totalRecords={dataShow.length}
+                            pageLimit={pageLimit}
+                            pageNeighbours={2}
+                            setOffset={setOffset}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
                         </tbody>
                     </Table>
                     <Button href="/add/product" className="btn-custom btn-comment-form">Thêm Sản Phẩm</Button>

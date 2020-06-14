@@ -3,24 +3,24 @@ import {Container, Row, Col} from "reactstrap";
 import Request from "../../utils/request";
 
 function BlogItem(props) {
+    const idNews = props.match.params.id;
+
     const [data, setData] = useState([]);
     const [dataComment, setDataComment] = useState([]);
     const [nameComment, setNameComment] = useState();
     const [email, setEmail] = useState();
     const [comment, setComment] = useState();
-    const idNews = props.match.params.id;
 
     const getNewsId = async () => {
-        const {data} = await Request.get('http://localhost:4000/news/' + idNews)
+        const {data} = await Request.get('news/' + idNews)
         const dataComment = data.comments
         setDataComment(dataComment)
-        console.log(dataComment);
         setData(data);
     };
 
     const addComment = e => {
         e.preventDefault()
-        Request.put('http://localhost:4000/cmt/' + idNews, {nameComment, email, comment})
+        Request.put('cmt/' + idNews, {nameComment, email, comment})
         window.location.reload();
     }
 
@@ -85,7 +85,7 @@ function BlogItem(props) {
                                                         </Col>
                                                         <Col sm={10}>
                                                             <input type="text" id="name" name="name" placeholder="Họ tên"
-                                                                   required="required"
+                                                                   required={true}
                                                                    value={nameComment}
                                                                    onChange={e => setNameComment(e.target.value)}
                                                             />
@@ -98,7 +98,7 @@ function BlogItem(props) {
                                                         </Col>
                                                         <Col sm={10}>
                                                             <input type="text" id="email" name="email" placeholder="Email"
-                                                                   required="required"
+                                                                   required={true}
                                                                    value={email}
                                                                    onChange={e => setEmail(e.target.value)}
                                                             />
@@ -111,7 +111,7 @@ function BlogItem(props) {
                                                         </Col>
                                                         <Col sm={10}>
                                                     <textarea id="subject" name="subject" placeholder="Write something.."
-                                                              required="required"
+                                                              required={true}
                                                               value={comment}
                                                               onChange={e => setComment(e.target.value)}>
                                                     </textarea>

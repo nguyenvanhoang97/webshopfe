@@ -4,6 +4,7 @@ import {Container, Row, Col} from "reactstrap";
 import Request from "../../utils/request";
 
 function ProductItem(props) {
+
     const [data, setData] = useState([]);
     const [dataComment, setDataComment] = useState([]);
     const [nameComment, setNameComment] = useState();
@@ -12,25 +13,29 @@ function ProductItem(props) {
     const idProduct = props.match.params.id;
 
     const getProductId = async () => {
-        const {data} = await Request.get('http://localhost:4000/product/' + idProduct)
+        const {data} = await Request.getNoToken('product/' + idProduct)
         const dataComment = data.comments
         setDataComment(dataComment)
-        console.log(dataComment);
+        console.log(data)
         setData(data);
     };
 
-    const addComment = e => {
+    const addComment = async (e) => {
         e.preventDefault()
-        Request.put('http://localhost:4000/comment/' + idProduct, {nameComment, email, comment})
+        await Request.putNoToken('comment/' + idProduct, {nameComment, email, comment})
         window.location.reload();
     }
 
-    const addToCart = e => {
-        e.preventDefault()
+    const addToCart = async () => {
+        await Request.put('cart', {idProduct, amount: 1})
+            .then( function (response) {
+                alert("Da them vao gio hang")
+            }).catch(err => {
+                alert("Da co trong gio hang hoac chua dang nhap")
+            })
+    };
 
-    }
-
-    useEffect( () => {
+    useEffect(() => {
         getProductId();
     }, []);
 
@@ -47,7 +52,7 @@ function ProductItem(props) {
                                     <div className="image-product-detail">
                                         <img alt={data.name} key={data._id}
                                              className="img-product"
-                                             src={data.image===0?data.image:`http://localhost:4000/file/${data.image}`}/>
+                                             src={data.image === 0 ? data.image : `http://localhost:4000/file/${data.image}`}/>
                                     </div>
                                 </Col>
                                 <Col sm={4} className="details">
@@ -80,8 +85,9 @@ function ProductItem(props) {
                                         <Row key={index}>
                                             <div className="comment-main-level">
                                                 <div className="comment-avatar">
-                                                    <img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg"
-                                                    alt=""/>
+                                                    <img
+                                                        src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg"
+                                                        alt=""/>
                                                 </div>
                                                 <div className="comment-box">
                                                     <div className="comment-head">

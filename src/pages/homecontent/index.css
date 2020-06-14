@@ -592,3 +592,12 @@ h2.title {
 .product-btn {
     width: 92%;
 }
+
+.btn-search {
+    margin-top: 6px;
+}
+
+.image-add {
+    width: 300px;
+    height: 300px;
+}
