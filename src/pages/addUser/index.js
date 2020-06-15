@@ -38,7 +38,7 @@ function AddUser(props) {
     }, []);
 
     return (
-        <Container fluid className="container-body">
+        <Container fluid style={{minHeight: '55vh'}}>
             <Container className="comment-form" fluid>
                 <Col sm={2}></Col>
                 <Col sm={8}>
@@ -68,8 +68,8 @@ function AddUser(props) {
 
                         <h3 htmlFor="">Check admin</h3>
                         <label className="checkbox">
-                            {<input type="checkbox" value={isAdmin} id="isadmin" name="isAdmin" checked={isAdmin}
-                                   onChange={e => setAdmin(JSON.parse(e.target.value))}/>} Check admin
+                            <input type="checkbox" id="isadmin" name="isAdmin" checked={isAdmin}
+                                   onChange={e => setAdmin(JSON.parse(e.target.checked))}/> Check admin
                         </label>
 
                         {isAdd && <button type="button" className="btn-custom btn-comment-form" onClick={addUser}>

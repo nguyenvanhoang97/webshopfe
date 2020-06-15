@@ -38,7 +38,9 @@ function ContentCart() {
             <tr key={index}>
                 <td className="text-center">{index + 1}</td>
                 <td className="text-center">{product.idProduct.name}</td>
-                <td className="text-center"><img className="image-table" src={product.idProduct.image.indexOf('http')===0?product.idProduct.image:`http://localhost:4000/file/${product.idProduct.image}`}/></td>
+                <td className="text-center">
+                    <img className="image-table" src={product.idProduct.image.indexOf('http')===0?product.idProduct.image:`http://localhost:4000/file/${product.idProduct.image}`}/>
+                </td>
                 <td className="text-center">{product.idProduct.price}</td>
                 <td className="text-center">
                     <input className="product-quantity-input" type="number" value="1" min="1"

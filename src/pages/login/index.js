@@ -46,8 +46,10 @@ function Login(props) {
                         localStorage.setItem("isAdmin", data.user.isAdmin ? 1 : 0)
                         if (data.user.isAdmin) {
                             setRedirectUrl('/home')
+                            window.location.reload()
                         } else {
                             setRedirectUrl('/')
+                            window.location.reload()
                         }
                     } else {
                         alert("Đăng nhập không thành công")
