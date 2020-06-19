@@ -19,7 +19,7 @@ function AddNews(props) {
         data.append('name', name)
         data.append('content', content)
         await Request.post('news', data)
-        window.location.replace('http://localhost:3000/news')
+        window.location.replace('/news')
     }
 
     const updateNews = async e => {
@@ -29,7 +29,7 @@ function AddNews(props) {
         data.append('name', name)
         data.append('content', content)
         await Request.put('news/' + idNews, data)
-        window.location.replace('http://localhost:3000/news')
+        window.location.replace('/news')
     }
 
     const getNewsId = async () => {
@@ -57,55 +57,63 @@ function AddNews(props) {
     };
 
     return (
-        <Container fluid className="container-body">
-            <Container fluid className="comment-form">
-                <Col sm={2}></Col>
-                <Col sm={8}>
-                    {isAdd && <h2 className="title-side text-center">Thêm bài viết</h2>}
-                    {!isAdd && <h2 className="title-side text-center">Sửa bài viết</h2>}
-                    <div>
-                        <label htmlFor="">Tiêu đề bài viết</label>
-                        <input type="text" id="name" name="name" placeholder="Tên sản phẩm"
-                               required={true}
-                               value={name}
-                               onChange={e => setName(e.target.value)}/>
-
-                        <label htmlFor="">Hình ảnh</label>
-
-                        <div>
-                            <label htmlFor="upload-button">
-                                {image.preview ? (
-                                    <img src={image.preview} alt="dummy" width="300" height="300" />
-                                ) : (
-                                    <>
-                                        <h5 className="text-center">Upload your photo</h5>
-                                    </>
-                                )}
-                            </label>
-                            <input
-                                type="file"
-                                id="upload-button"
-                                style={{ display: "none" }}
-                                onChange={handleChange}
-                            />
+        <Container fluid>
+            <div className="slider-area ">
+                <div className="single-slider slider-height2" style={{display: 'flex', alignItems: 'center'}}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-12">
+                                <div className="hero-cap text-center">
+                                    {isAdd && <h2>Add news</h2>}
+                                    {!isAdd && <h2>Edit news</h2>}
+                                </div>
+                            </div>
                         </div>
-
-                        <label htmlFor="subject">Nội dung bài viết</label>
-                        <textarea style={{height: '400px'}} id="content" name="content" placeholder="Mô tả chi tiết"
-                                  required={true}
-                                  value={content}
-                                  onChange={e => setContent(e.target.value)}>
-                        </textarea>
-                        {isAdd && <button type="submit" className="btn-custom btn-comment-form" onClick={addNews}>
-                            Thêm bài viết
-                        </button>}
-                        {!isAdd && <button type="submit" className="btn-custom btn-comment-form" onClick={updateNews}>
-                            Sửa bài viết
-                        </button>}
                     </div>
-                </Col>
-                <Col sm={2}></Col>
-            </Container>
+                </div>
+            </div>
+            <section className="blog_area section-padding" style={{maxWidth: '1000px', marginLeft: 'auto', marginRight: 'auto'}}>
+                <div>
+                    <label htmlFor="">Tiêu đề bài viết</label>
+                    <input type="text" id="name" name="name" placeholder="Tên sản phẩm"
+                           required={true}
+                           value={name}
+                           onChange={e => setName(e.target.value)}/>
+
+                    <label htmlFor="">Hình ảnh</label>
+
+                    <div>
+                        <label htmlFor="upload-button">
+                            {image.preview ? (
+                                <img src={image.preview} alt="dummy" width="300" height="300" />
+                            ) : (
+                                <>
+                                    <h5 className="text-center">Upload your photo</h5>
+                                </>
+                            )}
+                        </label>
+                        <input
+                            type="file"
+                            id="upload-button"
+                            style={{ display: "none" }}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <label htmlFor="subject">Nội dung bài viết</label>
+                    <textarea style={{height: '400px'}} id="content" name="content" placeholder="Mô tả chi tiết"
+                              required={true}
+                              value={content}
+                              onChange={e => setContent(e.target.value)}>
+                    </textarea>
+                    {isAdd && <button type="submit" className="btn" onClick={addNews}>
+                        Thêm bài viết
+                    </button>}
+                    {!isAdd && <button type="submit" className="btn" onClick={updateNews}>
+                        Sửa bài viết
+                    </button>}
+                </div>
+            </section>
         </Container>
     )
 }

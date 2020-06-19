@@ -20,11 +20,12 @@ function Login(props) {
             Request.postNoToken("user", {name, username, password, isAdmin})
                 .then(function (response) {
                     const {data} = response
-                    if (response.ok === false) {
-                        alert("Dang ky khong thanh cong")
+                    console.log(data)
+                    if (data.ok===false) {
+                        alert(data.msg)
                     } else {
-                        alert("Dang ky thanh cong")
-                        window.location.replace("/login")
+                        alert("Đăng ký thành công")
+                        window.location.replace('/login')
                     }
                 }).catch(err => {
                 err.response && err.response.data && err.response.data.msg && alert(err.response.data.msg)
@@ -41,7 +42,7 @@ function Login(props) {
                 .then(function (response) {
                     const {data} = response
                     console.log(data)
-                    if (data.ok === true) {
+                    if (data.ok) {
                         localStorage.setItem("token", data.token)
                         localStorage.setItem("isAdmin", data.user.isAdmin ? 1 : 0)
                         if (data.user.isAdmin) {
@@ -58,12 +59,12 @@ function Login(props) {
                 err.response && err.response.data && err.response.data.msg && alert(err.response.data.msg)
             })
         } else {
-            alert('Nhập username password');
+            alert('Vui lòng nhập username password');
         }
     }
 
     return (
-        <Container fluid style={{minHeight: '57vh'}}>
+        <Container fluid>
             {
                 redirectUrl
                 &&
@@ -71,45 +72,86 @@ function Login(props) {
                     to={redirectUrl}
                 />
             }
-            <Container fluid>
-                <div className="wrapper">
-                    <form className="form-signin">
-                        {isLogin && <h2 className="title text-center">LOGIN</h2>}
-                        {isRegister && <h2 className="title text-center">REGISTER</h2>}
-                        {isRegister && <input type="text" id="name" name="name" className="form-control"
-                                              placeholder="Tên người dùng"
-                                              required={true}
-                                              value={name}
-                                              onChange={e => setName(e.target.value)}
-                        />}
-                        <input type="text" id="username" name="username" className="form-control"
-                               placeholder="Tên đăng nhập"
-                               required={true}
-                               value={username}
-                               onChange={e => setUsername(e.target.value)}
-                        />
-                        <input type="password" id="password" name="password" className="form-control"
-                               placeholder="Mật khẩu"
-                               required={true}
-                               value={password}
-                               onChange={e => setPass(e.target.value)}
-                        />
-                        {isRegister && <input type="password" id="cpassword" name="conpass" className="form-control"
-                                              placeholder="Xác nhận mật khẩu"
-                                              required={true}
-                                              value={cpassword}
-                                              onChange={e => setConPass(e.target.value)}
-                        />}
-
-                        {isLogin && <button className="btn btn-lg btn-block btn-signin" type="submit" id="btnLog"
-                                            onClick={login}>Đăng nhập
-                        </button>}
-                        {isRegister && <button className="btn btn-lg btn-block btn-signin" type="submit" id="btnReg"
-                                               onClick={register}>Đăng ký
-                        </button>}
-                    </form>
+            <div className="slider-area ">
+                <div className="single-slider slider-height2 d-flex align-items-center">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-12">
+                                <div className="hero-cap text-center">
+                                    <h2>Login</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </Container>
+            </div>
+
+            <section className="login_part section_padding ">
+                <div className="container">
+                    <div className="row align-items-center">
+                        <div className="col-lg-6 col-md-6">
+                            <div className="login_part_text text-center">
+                                <div className="login_part_text_iner">
+                                    <h2>New to our Shop?</h2>
+                                    <p>There are advances being made in science and technology
+                                        everyday, and a good example of this is the</p>
+                                    <a href="/register" className="btn_3">Create an Account</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-6 col-md-6">
+                            <div className="login_part_form">
+                                <div className="login_part_form_iner">
+                                    <h3>Welcome Back !
+                                        Please Sign in now</h3>
+                                    <div className="row contact_form">
+                                        {isRegister && <div className="col-md-12 form-group p_star">
+                                            <input type="text" id="name" name="name" className="form-control"
+                                                   placeholder="First and last name"
+                                                   required={true}
+                                                   value={name}
+                                                   onChange={e => setName(e.target.value)}
+                                            />
+                                        </div>}
+                                        <div className="col-md-12 form-group p_star">
+                                            <input type="text" id="username" name="username" className="form-control"
+                                                   placeholder="Username"
+                                                   required={true}
+                                                   value={username}
+                                                   onChange={e => setUsername(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="col-md-12 form-group p_star">
+                                            <input type="password" id="password" name="password" className="form-control"
+                                                   placeholder="Password"
+                                                   required={true}
+                                                   value={password}
+                                                   onChange={e => setPass(e.target.value)}
+                                            />
+                                        </div>
+                                        {isRegister && <div className="col-md-12 form-group p_star">
+                                            <input type="password" id="cpassword" name="cpassword" className="form-control"
+                                                   placeholder="Confirm password"
+                                                   required={true}
+                                                   value={cpassword}
+                                                   onChange={e => setConPass(e.target.value)}
+                                            />
+                                        </div>}
+                                        <div className="col-md-12 form-group">
+                                            {isLogin && <button className="btn_3" type="submit" id="btnLog"
+                                                                onClick={login}>Sign in
+                                            </button>}
+                                            {isRegister && <button className="btn_3" type="submit" id="btnReg"
+                                                                   onClick={register}>Sign up
+                                            </button>}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </Container>
     )
 }

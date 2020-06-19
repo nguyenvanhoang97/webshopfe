@@ -45,7 +45,7 @@ function NewsContent() {
     };
 
     const editNews = async (idNews) => {
-        window.location.replace('http://localhost:3000/edit/news/'+ idNews);
+        window.location.replace('/edit/news/'+ idNews);
     };
 
     const dataNews = (news, index) => {
@@ -53,59 +53,77 @@ function NewsContent() {
             <tr key={index}>
                 <td className="text-center">{index + 1}</td>
                 <td className="text-center">{news.name}</td>
-                <td><img className="image-table" src={news.image.indexOf('http')===0?news.image:`http://localhost:4000/file/${news.image}`}/></td>
+                <td className="text-center"><img style={{width: '150px', height: '150px'}} src={news.image.indexOf('http')===0?news.image:`http://localhost:4000/file/${news.image}`}/></td>
                 <td className="text-center"><Moment>{news.dateCreate}</Moment></td>
                 <td className="text-center"><Moment>{news.dateUpdate}</Moment></td>
                 <td>{((news.content || '').length > 500 ? `${news.content.slice(0, 500)} ...`:news.content)}</td>
                 <td className="text-center">
-                    <button className="btn-custom" onClick={() => editNews(news._id)}>Edit</button>
-                    <button className="btn-custom" onClick={() => removeNews(news._id)}>Delete</button>
+                    <button className="btn_3" style={{padding: '9px'}} onClick={() => editNews(news._id)}>Edit</button>
+                    <button className="btn_3" style={{padding: '9px'}} onClick={() => removeNews(news._id)}>Delete</button>
                 </td>
             </tr>
         )
     }
 
     return(
-        <Container fluid className="container-body">
-            <Container fluid className="comment-form">
-                <h2 className="title-side text-center">Danh mục người dùng</h2>
-                <Col sm={1}></Col>
-                <Col sm={10}>
-                    <Table striped bordered hover variant="dark">
-                        <thead>
-                        <th style={{width: '5%'}} className="text-center">STT</th>
-                        <th style={{width: '15%'}} className="text-center">Tiêu đề</th>
-                        <th style={{width: '20%'}} className="text-center">Hình ảnh</th>
-                        <th style={{width: '10%'}} className="text-center">Ngày tạo</th>
-                        <th style={{width: '10%'}} className="text-center">Ngày cập nhật</th>
-                        <th style={{width: '25%'}} className="text-center">Nội dung</th>
-                        <th style={{width: 'auto'}} className="table-search text-center">
-                            <input type="text" id="search" name="search" placeholder="Tên sản phẩm"
-                                   required="required"
-                                   value={search}
-                                   onChange={e => setSearch(e.target.value)}/>
-                            <button className="btn-custom" type={"button"}
-                                    onClick={() => searchNews(search)}>
-                                Search
-                            </button>
-                        </th>
-                        </thead>
-                        <tbody>
-                        {currentData.map(dataNews)}
-                        <Paginator
-                            totalRecords={dataShow.length}
-                            pageLimit={pageLimit}
-                            pageNeighbours={2}
-                            setOffset={setOffset}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                        </tbody>
-                    </Table>
-                    <Button className="btn-custom btn-comment-form" href="/add/news">Thêm bài viết</Button>
-                </Col>
-                <Col sm={1}></Col>
-            </Container>
+        <Container fluid>
+            <div className="slider-area ">
+                <div className="single-slider slider-height2 d-flex align-items-center">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-12">
+                                <div className="hero-cap text-center">
+                                    <h2>News List</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section className="cart_area section_padding">
+                <div className="container_table">
+                    <div className="cart_inner">
+                        <div className="table-responsive">
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th style={{width: '5%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">STT</th>
+                                    <th style={{width: '20%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Tiêu đề bài viết</th>
+                                    <th style={{width: '10%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Hình ảnh</th>
+                                    <th style={{width: '12%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Ngày tạo</th>
+                                    <th style={{width: '12%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Ngày cập nhật</th>
+                                    <th style={{width: '25%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Nội dung</th>
+                                    <th style={{width: 'auto'}} className="text-center" scope="col">
+                                        <input style={{width: 'auto'}} type="text" id="search" name="search" placeholder="Tiêu đề bài viết"
+                                               required="required"
+                                               value={search}
+                                               onChange={e => setSearch(e.target.value)}/>
+                                        <button className="btn_3" style={{padding: '9px'}} type={"button"}
+                                                onClick={() => searchNews(search)}>
+                                            Search
+                                        </button>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {currentData.map(dataNews)}
+                                </tbody>
+                            </table>
+                            <Paginator
+                                totalRecords={dataShow.length}
+                                pageLimit={pageLimit}
+                                pageNeighbours={2}
+                                setOffset={setOffset}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                            />
+                            <div className="checkout_btn_inner float-right">
+                                <button href="/add/news" className="btn">Thêm bài viết</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </Container>
     )
 }

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Container, Col, Button, Table} from "reactstrap";
+import {Container} from "reactstrap";
 import Request from "../../utils/request";
 import Moment from "react-moment";
 import "moment-timezone"
@@ -47,7 +47,7 @@ function UserContent() {
     };
 
     const editUser = async (idUser) => {
-        window.location.replace('http://localhost:3000/edit/user/'+ idUser);
+        window.location.replace('/edit/user/'+ idUser);
     };
 
     const dataUser = (user, index) => {
@@ -62,54 +62,72 @@ function UserContent() {
                     {<input type="checkbox" checked={user.isAdmin}/>}
                 </td>
                 <td className="text-center">
-                    <button className="btn-custom" onClick={() => editUser(user._id)}>Edit</button>
-                    <button className="btn-custom" onClick={() => removeUser(user._id)}>Delete</button>
+                    <button className="btn_3" style={{padding: '9px'}} onClick={() => editUser(user._id)}>Edit</button>
+                    <button className="btn_3" style={{padding: '9px'}} onClick={() => removeUser(user._id)}>Delete</button>
                 </td>
             </tr>
         )
     }
 
     return(
-        <Container fluid className="container-body">
-            <Container fluid className="comment-form">
-                <h2 className="title-side text-center">Danh mục người dùng</h2>
-                <Col sm={1}></Col>
-                <Col sm={10}>
-                    <Table striped bordered hover variant="dark">
-                        <thead>
-                        <th style={{width: '5%'}} className="text-center">STT</th>
-                        <th style={{width: '20%'}} className="text-center">Tên người dùng</th>
-                        <th style={{width: '20%'}} className="text-center">Tên đăng nhập</th>
-                        <th style={{width: '15%'}} className="text-center">Ngày tạo</th>
-                        <th style={{width: '15%'}} className="text-center">Ngày cập nhật</th>
-                        <th style={{width: '10%'}} className="text-center">Is Admin</th>
-                        <th style={{width: 'auto'}} className="table-search text-center">
-                            <input type="text" id="search" name="search" placeholder="Tên nguoi dung"
-                                   required="required"
-                                   value={search}
-                                   onChange={e => setSearch(e.target.value)}/>
-                            <button className="btn-custom" type={"button"}
-                                    onClick={() => searchUser(search)}>
-                                Search
-                            </button>
-                        </th>
-                        </thead>
-                        <tbody>
-                        {currentData.map(dataUser)}
-                        <Paginator
-                            totalRecords={dataShow.length}
-                            pageLimit={pageLimit}
-                            pageNeighbours={2}
-                            setOffset={setOffset}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                        </tbody>
-                    </Table>
-                    <Button className="btn-custom btn-comment-form" href="/add/user">Thêm người dùng</Button>
-                </Col>
-                <Col sm={1}></Col>
-            </Container>
+        <Container fluid>
+            <div className="slider-area ">
+                <div className="single-slider slider-height2 d-flex align-items-center">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-12">
+                                <div className="hero-cap text-center">
+                                    <h2>User List</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section className="cart_area section_padding">
+                <div className="container_table">
+                    <div className="cart_inner">
+                        <div className="table-responsive">
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th style={{width: '5%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">STT</th>
+                                    <th style={{width: '20%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Họ tên</th>
+                                    <th style={{width: '20%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Username</th>
+                                    <th style={{width: '15%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Ngày tạo</th>
+                                    <th style={{width: '15%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Ngày cập nhật</th>
+                                    <th style={{width: '10%', fontSize: '16px', verticalAlign: 'middle'}} className="text-center" scope="col">Phân quyền</th>
+                                    <th style={{width: 'auto'}} className="text-center" scope="col">
+                                        <input style={{width: 'auto'}} type="text" id="search" name="search" placeholder="Username người dùng"
+                                               required="required"
+                                               value={search}
+                                               onChange={e => setSearch(e.target.value)}/>
+                                        <button className="btn_3" style={{padding: '9px'}} type={"button"}
+                                                onClick={() => searchUser(search)}>
+                                            Search
+                                        </button>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {currentData.map(dataUser)}
+                                </tbody>
+                            </table>
+                            <Paginator
+                                totalRecords={dataShow.length}
+                                pageLimit={pageLimit}
+                                pageNeighbours={2}
+                                setOffset={setOffset}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                            />
+                            <div className="checkout_btn_inner float-right">
+                                <button href="/add/user" className="btn">Thêm người dùng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </Container>
     )
 }

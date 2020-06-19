@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Container, Col} from "reactstrap";
+import {Container} from "reactstrap";
 import Request from "../../utils/request";
 
 function AddUser(props) {
@@ -38,50 +38,59 @@ function AddUser(props) {
     }, []);
 
     return (
-        <Container fluid style={{minHeight: '55vh'}}>
-            <Container className="comment-form" fluid>
-                <Col sm={2}></Col>
-                <Col sm={8}>
-                    {isAdd && <h2 className="title-side text-center">Thêm người dùng</h2>}
-                    {!isAdd && <h2 className="title-side text-center">Sửa thông tin người dùng</h2>}
-                    <div>
-                        <h3 htmlFor="fname">Họ tên</h3>
-                        <input type="text" id="name" name="name" placeholder="Họ tên người dùng"
-                               required={true}
-                               value={name}
-                               onChange={e => setName(e.target.value)}
-                        />
-
-                        <h3 htmlFor="lname">Username</h3>
-                        <input type="text" id="uname" name="username" placeholder="Tên đăng nhập"
-                               required={true}
-                               value={username}
-                               onChange={e => setUsername(e.target.value)}
-                        />
-
-                        {isAdd && <h3 htmlFor="lname">Password ( tối thiểu 6 kí tự )</h3>}
-                        {isAdd && <input type="text" id="pass" name="password" placeholder="Mật khẩu"
-                               required={true}
-                               value={password}
-                               onChange={e => setPass(e.target.value)}
-                        />}
-
-                        <h3 htmlFor="">Check admin</h3>
-                        <label className="checkbox">
-                            <input type="checkbox" id="isadmin" name="isAdmin" checked={isAdmin}
-                                   onChange={e => setAdmin(JSON.parse(e.target.checked))}/> Check admin
-                        </label>
-
-                        {isAdd && <button type="button" className="btn-custom btn-comment-form" onClick={addUser}>
-                            Thêm
-                        </button>}
-                        {!isAdd && <button type="button" className="btn-custom btn-comment-form" onClick={updateUser}>
-                            Sửa
-                        </button>}
+        <Container fluid>
+            <div className="slider-area ">
+                <div className="single-slider slider-height2" style={{display: 'flex', alignItems: 'center'}}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-12">
+                                <div className="hero-cap text-center">
+                                    {isAdd && <h2>Add user</h2>}
+                                    {!isAdd && <h2>Edit user</h2>}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </Col>
-                <Col sm={2}></Col>
-            </Container>
+                </div>
+            </div>
+            <section className="blog_area section-padding" style={{maxWidth: '1000px', marginLeft: 'auto', marginRight: 'auto'}}>
+                <div style={{display: 'inline'}}>
+                    <h3 htmlFor="fname">Họ tên</h3>
+                    <input type="text" id="name" name="name" placeholder="Họ tên người dùng"
+                           required={true}
+                           value={name}
+                           onChange={e => setName(e.target.value)}
+                    />
+
+                    <h3 htmlFor="lname">Username</h3>
+                    <input type="text" id="uname" name="username" placeholder="Tên đăng nhập"
+                           required={true}
+                           value={username}
+                           onChange={e => setUsername(e.target.value)}
+                    />
+
+                    {isAdd && <h3 htmlFor="lname">Password ( tối thiểu 6 kí tự )</h3>}
+                    {isAdd && <input type="text" id="pass" name="password" placeholder="Mật khẩu"
+                           required={true}
+                           value={password}
+                           onChange={e => setPass(e.target.value)}
+                    />}
+
+                    <h3 htmlFor="">Check admin</h3>
+                    <label className="checkbox">
+                        <input type="checkbox" id="isadmin" name="isAdmin" checked={isAdmin}
+                               onChange={e => setAdmin(JSON.parse(e.target.checked))}/> Check admin
+                    </label>
+                </div>
+                <div className="blog_area section-padding">
+                    {isAdd && <button type="button" className="btn" onClick={addUser}>
+                        Thêm
+                    </button>}
+                    {!isAdd && <button type="button" className="btn" onClick={updateUser}>
+                        Sửa
+                    </button>}
+                </div>
+            </section>
         </Container>
     )
 }

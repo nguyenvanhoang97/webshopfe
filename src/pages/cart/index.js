@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./index.css";
-import {Container, Row, Col, Table} from "reactstrap";
+import {Container} from "reactstrap";
 import Request from "../../utils/request";
 
 function ContentCart() {
@@ -36,55 +35,87 @@ function ContentCart() {
     const dataProducts = (product, index) => {
         return (
             <tr key={index}>
-                <td className="text-center">{index + 1}</td>
-                <td className="text-center">{product.idProduct.name}</td>
-                <td className="text-center">
-                    <img className="image-table" src={product.idProduct.image.indexOf('http')===0?product.idProduct.image:`http://localhost:4000/file/${product.idProduct.image}`}/>
+                <td>
+                    <div className="media">
+                        <div className="d-flex">
+                            <img src={product.idProduct.image.indexOf('http')===0?product.idProduct.image:`http://localhost:4000/file/${product.idProduct.image}`}/>
+                        </div>
+                        <div className="media-body">
+                            <p>{product.idProduct.name}</p>
+                        </div>
+                    </div>
                 </td>
-                <td className="text-center">{product.idProduct.price}</td>
-                <td className="text-center">
-                    <input className="product-quantity-input" type="number" value="1" min="1"
-                           value={product.amount}
-                           onChange={e => setAmount(e.target.value)}/>
+                <td>
+                    <h5>{product.idProduct.price} vnd</h5>
                 </td>
-                <td className="text-center">
-                    <button className="btn-custom" onClick={() => removeCart(product._id)}>Remove</button>
+                <td>
+                    <span onClick={() => removeCart(product._id)}>Remove</span>
                 </td>
-                <td className="text-center">{product.amount * product.idProduct.price}</td>
+                <td>
+                    <div className="product_count">
+                        <input className="product-quantity-input" type="number" value="1" min="1"
+                               value={product.amount}
+                               onChange={e => setAmount(e.target.value)}/>
+                    </div>
+                </td>
+                <td>
+                    <h5>{product.idProduct.price * product.idProduct.amount}</h5>
+                </td>
             </tr>
         )
     }
     return (
-        <Container fluid className="container-body">
-            <Container fluid className="comment-form">
-                <h2 className="text-center title-side">Shopping Cart</h2>
-                <Col sm={1}></Col>
-                <Col sm={10} className="shopping-cart">
-                    <div>
-                        <Table striped bordered hover variant="dark">
-                            <thead>
-                            <th style={{width: '5%'}} className="text-center">STT</th>
-                            <th style={{width: '15%'}} className="text-center">Tên sản phẩm</th>
-                            <th style={{width: '25%'}} className="text-center">Hình ảnh</th>
-                            <th style={{width: '10%'}} className="text-center">Giá</th>
-                            <th style={{width: '10%'}} className="text-center">Số lượng</th>
-                            <th style={{width: '10%'}} className="text-center"></th>
-                            <th style={{width: '10%'}} className="text-center">Tổng</th>
-                            </thead>
-                            <tbody>
-                            {cart.map(dataProducts)}
-                            </tbody>
-                        </Table>
-                    </div>
-                    <Row className="total-product">
-                        <div className="totals">
-
+        <Container fluid>
+            <div className="slider-area ">
+                <div className="single-slider slider-height2 d-flex align-items-center">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-12">
+                                <div className="hero-cap text-center">
+                                    <h2>Cart List</h2>
+                                </div>
+                            </div>
                         </div>
-                        <button className="btn-custom btn-comment-form"><a href={"/checkout"}>Check out</a></button>
-                    </Row>
-                </Col>
-                <Col sm={1}></Col>
-            </Container>
+                    </div>
+                </div>
+            </div>
+            <section className="cart_area section_padding">
+                <div className="container">
+                    <div className="cart_inner">
+                        <div className="table-responsive">
+                            <table className="table" style={{border: 'none'}}>
+                                <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col"></th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {cart.map(dataProducts)}
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <h5>Subtotal</h5>
+                                    </td>
+                                    <td>
+                                        <h5>$2160.00</h5>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div className="checkout_btn_inner float-right">
+                                <a className="btn_1" href="/shop">Continue Shopping</a>
+                                <a className="btn_1 checkout_btn_1" href="/checkout">Proceed to checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </Container>
     );
 }

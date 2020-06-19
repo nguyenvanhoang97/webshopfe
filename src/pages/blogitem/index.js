@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {Container, Row, Col} from "reactstrap";
+import {Container} from "reactstrap";
 import Request from "../../utils/request";
+import "./index.css"
 
 function BlogItem(props) {
+    console.log(props)
     const idNews = props.match.params.id;
 
     const [data, setData] = useState([]);
@@ -12,15 +14,15 @@ function BlogItem(props) {
     const [comment, setComment] = useState();
 
     const getNewsId = async () => {
-        const {data} = await Request.get('news/' + idNews)
+        const {data} = await Request.getNoToken('news/' + idNews)
+        setData(data);
         const dataComment = data.comments
         setDataComment(dataComment)
-        setData(data);
     };
 
-    const addComment = e => {
+    const addComment = async (e) => {
         e.preventDefault()
-        Request.put('cmt/' + idNews, {nameComment, email, comment})
+        await Request.putNoToken('cmt/' + idNews, {nameComment, email, comment})
         window.location.reload();
     }
 
@@ -30,108 +32,146 @@ function BlogItem(props) {
 
     return (
         <Container fluid>
-            <Container fluid className="content">
-                <div className="product-item">
-                    <Col sm={3} className="left-side">
-                        <Row className="left-sidebar">
-                            <h4 className="title-side">Tin tức liên quan</h4>
-
-                        </Row>
-                    </Col>
-
-                    <Col sm={9} className="padding-right">
-                        <div className="product-item">
-                            <h2 className="title-side text-center">
-                                {data.name}
-                            </h2>
-                            <Row>
-                                <Col sm={1}></Col>
-                                <Col sm={10}>
-                                    <h4>{data.content}</h4>
-                                    <Row className="comment">
-                                        <h2 className="title-side text-center comment-form">Bình luận</h2>
-                                        <Row>
-                                            <Col sm={1}></Col>
-                                            <Col sm={10}>
-                                                {
-                                                    dataComment.map((cmt, index) => {
-                                                        return (
-                                                            <Row key={index}>
-                                                                <div className="comment-main-level">
-                                                                    <div className="comment-avatar">
-                                                                        <img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg"
-                                                                             alt=""/>
-                                                                    </div>
-                                                                    <div className="comment-box">
-                                                                        <div className="comment-head">
-                                                                            <h6 className="comment-name"><a
-                                                                                href="http://creaticode.com/blog">{cmt.nameComment}</a></h6>
-                                                                            <h6 className="comment-name">{cmt.email}</h6>
-                                                                        </div>
-                                                                        <div className="comment-content">
-                                                                            {cmt.comment}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </Row>
-                                                        );
-                                                    })
-                                                }
-                                                <div className="comment-form">
-                                                    <h2 className="title-side text-center">Đánh giá</h2>
-                                                    <Row className="input-form">
-                                                        <Col sm={2}>
-                                                            <h3 htmlFor="fname">Họ tên: </h3>
-                                                        </Col>
-                                                        <Col sm={10}>
-                                                            <input type="text" id="name" name="name" placeholder="Họ tên"
-                                                                   required={true}
-                                                                   value={nameComment}
-                                                                   onChange={e => setNameComment(e.target.value)}
-                                                            />
-                                                        </Col>
-                                                    </Row>
-
-                                                    <Row className="input-form">
-                                                        <Col sm={2}>
-                                                            <h3 htmlFor="email">Email: </h3>
-                                                        </Col>
-                                                        <Col sm={10}>
-                                                            <input type="text" id="email" name="email" placeholder="Email"
-                                                                   required={true}
-                                                                   value={email}
-                                                                   onChange={e => setEmail(e.target.value)}
-                                                            />
-                                                        </Col>
-                                                    </Row>
-
-                                                    <Row className="input-form">
-                                                        <Col sm={2}>
-                                                            <h3 htmlFor="subject">Comment: </h3>
-                                                        </Col>
-                                                        <Col sm={10}>
-                                                    <textarea id="subject" name="subject" placeholder="Write something.."
-                                                              required={true}
-                                                              value={comment}
-                                                              onChange={e => setComment(e.target.value)}>
-                                                    </textarea>
-                                                        </Col>
-                                                    </Row>
-                                                    <button type="submit" className="btn-custom btn-comment-form" onClick={addComment}>
-                                                        Submit
-                                                    </button>
-                                                </div>
-                                            </Col>
-                                            <Col sm={1}></Col>
-                                        </Row>
-                                    </Row>
-                                </Col>
-                                <Col sm={1}></Col>
-                            </Row>
+            <div className="slider-area ">
+                <div className="single-slider slider-height2" style={{display: 'flex', alignItems: 'center'}}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-12">
+                                <div className="hero-cap text-center">
+                                    <h2>Blog details</h2>
+                                </div>
+                            </div>
                         </div>
-                    </Col>
+                    </div>
                 </div>
-            </Container>
+            </div>
+
+            <section className="blog_area single-post-area section-padding">
+                <div className="container">
+                    <div className="row" style={{display: 'flex'}}>
+                        <div className="col-sm-8 posts-list" style={{maxWidth: '67%'}}>
+                            <div className="single-post">
+                                <div className="feature-img">
+                                    {/*<img className="card-img rounded-0"*/}
+                                    {/*     src={data.image.indexOf('http')===0?data.image:`http://localhost:4000/file/${data.image}`}/>*/}
+                                </div>
+                                <div className="blog_details">
+                                    <h2>
+                                        {data.name}
+                                    </h2>
+                                    <p className="excert">
+                                        {data.content}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="comments-area">
+                                <h4>Đánh giá</h4>
+                                <div className="comment-list">
+                                    <div className="single-comment justify-content-between d-flex">
+                                        {
+                                            dataComment.map((cmt, index) => {
+                                                return(
+                                                    <div className="user" style={{display: 'flex', justifyContent: 'between'}}>
+                                                        <div>
+                                                            <div className="thumb" style={{textAlign: 'center'}}>
+                                                                <img src="/assets/img/comment/comment_1.png"/>
+                                                            </div>
+                                                            <div className="justify-content-between" style={{justifyContent: 'between'}}>
+                                                                <div className="d-flex align-items-center" style={{alignItems: 'center', textAlign: 'center'}}>
+                                                                    <h4>
+                                                                        <span>{cmt.nameComment}</span>
+                                                                    </h4>
+                                                                    <span>{cmt.email} </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="desc" style={{marginLeft: '30px'}}>
+                                                            <p className="comment">
+                                                                {cmt.comment}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="comment-form">
+                                <h4>Comments</h4>
+                                <form className="form-contact comment_form" action="#" id="commentForm">
+                                    <div className="row">
+                                        <div className="row" style={{display: 'flex'}}>
+                                            <div style={{width: '50%'}}>
+                                                <div className="form-group">
+                                                    <input type="text" id="name" name="name" placeholder="Họ tên"
+                                                           className="form-control"
+                                                           required={true}
+                                                           value={nameComment}
+                                                           onChange={e => setNameComment(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div style={{width: '50%'}}>
+                                                <div className="form-group">
+                                                    <input type="text" id="email" name="email" placeholder="Email"
+                                                           cols="30" rows="9"
+                                                           className="form-control"
+                                                           required={true}
+                                                           value={email}
+                                                           onChange={e => setEmail(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-12">
+                                            <div className="form-group">
+                                                <textarea id="subject" name="subject" placeholder="Write something.."
+                                                          cols="30" rows="9"
+                                                          className="form-control w-100"
+                                                          required={true}
+                                                          value={comment}
+                                                          onChange={e => setComment(e.target.value)}>
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <button type="submit" className="button button-contactForm btn_1 boxed-btn" onClick={addComment}>
+                                            Send Message
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div className="col-sm-4" style={{marginLeft: '5%', minWidth: '27%'}}>
+                            <div className="blog_right_sidebar">
+                                <aside className="single_sidebar_widget search_widget">
+                                    <form action="#">
+                                        <div className="form-group">
+                                            <div className="input-group mb-3">
+                                                <input type="text" id="search" name="search" placeholder="Tên bài viết"
+                                                       className="form-control"
+                                                       required="required"/>
+                                            </div>
+                                        </div>
+                                        <button className="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" style={{width: '100%'}}
+                                                type="submit" >Search
+                                        </button>
+                                    </form>
+                                </aside>
+
+                                <aside className="single_sidebar_widget popular_post_widget">
+                                    <h3 className="widget_title">Recent Post</h3>
+                                    {
+
+                                    }
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </Container>
     )
 }

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Container, Row, Col} from "reactstrap";
+import {Container} from "reactstrap";
 import "./index.css"
 import Request from "../../utils/request";
 import Paginator from 'react-hooks-paginator';
@@ -17,6 +17,7 @@ function BlogContent() {
 
     const getData = async () => {
         const {data} = await Request.getNoToken("news")
+        console.log(data)
         setDataShow(data);
         setDataFull(data);
     };
@@ -24,7 +25,6 @@ function BlogContent() {
     const searchBlog = async (search) => {
         if (search && search.length) {
             const {data} = await Request.getNoToken("news/?q=" + search)
-            console.log(data)
             setDataShow(data)
         } else {
             setDataShow(dataFull);
@@ -41,80 +41,104 @@ function BlogContent() {
     }, [offset, dataShow]);
 
     return (
-        <Container fluid className="container-body">
-            <Container fluid className="content">
-                <div className="product-item">
-                    <Col sm={3} className="left-side">
-                        <Row className="left-sidebar">
-                            <form className="search">
-                                <h4 className="title-side">Tìm kiếm</h4>
-                                <div className="search_box ">
-                                    <Col sm={9}>
-                                        <input type="text" id="search" name="search" placeholder="Tên sản phẩm"
-                                               required="required"
-                                               value={search}
-                                               onChange={e => setSearch(e.target.value)}/>
-                                    </Col>
-                                    <Col sm={3}>
-                                        <button className="btn-custom btn-search" type={"button"}
-                                                onClick={() => searchBlog(search)}>
-                                            Search
-                                        </button>
-                                    </Col>
+        <Container fluid>
+            <div className="slider-area ">
+                <div className="single-slider slider-height2 d-flex align-items-center">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-12">
+                                <div className="hero-cap text-center">
+                                    <h2>Blog</h2>
                                 </div>
-                            </form>
-                        </Row>
-                        <hr width="100%" align="center"/>
-                        <br/>
-                        <Row className="left-sidebar">
-                            <h4 className="title-side">Tin tức liên quan</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        </Row>
-                    </Col>
-
-                    <Col sm={9} className="padding-right">
-                        <div className="product-item">
-                            <h2 className="title-side text-center">
-                                News
-                            </h2>
+            <section className="blog_area section-padding">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-8 mb-5 mb-lg-0">
                             {
                                 currentData.map((blog, index) => {
-                                    return (
-                                        <Row className="card">
-                                            <Col sm={4}>
-                                                <img className="image-table"
-                                                     src={blog.image.indexOf('http') === 0 ? blog.image : `http://localhost:4000/file/${blog.image}`}/>
-                                            </Col>
-                                            <Col sm={8}>
-                                                <h4 className="title-side text-center">{blog.name}</h4>
-                                                <div className="">
-                                                    <div className="data">
-                                                        <div className="content">
-                                                            <p className="text">{((blog.content || '').length > 500 ? `${blog.content.slice(0, 500)} ...`:blog.content)}</p>
-                                                        </div>
-                                                        <div className="text-center">
-                                                            <a href={"/blog/" + blog._id} className="button">Read
-                                                                more</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    );
+                                    return(
+                                        <article className="blog_item">
+                                            <div className="blog_item_img">
+                                                <img className="card-img rounded-0"
+                                                     src={blog.image.indexOf('http')===0?blog.image:`http://localhost:4000/file/${blog.image}`}/>
+                                                    <a href="#" className="blog_item_date">
+                                                        <h3>{blog.dateCreate}</h3>
+                                                        <p>{blog.dateCreate}</p>
+                                                    </a>
+                                            </div>
+
+                                            <div className="blog_details">
+                                                <a className="d-inline-block" href={"/blog/" + blog._id}>
+                                                    <h2>{blog.name}</h2>
+                                                </a>
+
+                                                <p className="text">{((blog.content || '').length > 500 ? `${blog.content.slice(0, 500)} ...`:blog.content)}</p>
+                                                <ul className="blog-info-link">
+                                                    <li><a href=""><i className="fa fa-comments"></i>{blog.comments.length}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </article>
+                                    )
                                 })
                             }
                         </div>
-                        <Paginator
-                            totalRecords={dataShow.length}
-                            pageLimit={pageLimit}
-                            pageNeighbours={2}
-                            setOffset={setOffset}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    </Col>
+                        <div className="col-lg-4">
+                            <div className="blog_right_sidebar">
+                                <aside className="single_sidebar_widget search_widget">
+                                    <div>
+                                        <div className="form-group">
+                                            <div className="input-group mb-3">
+                                                <input type="text" id="search" name="search" placeholder="Tên bài viết"
+                                                       className="form-control"
+                                                       required="required"
+                                                       value={search}
+                                                       onChange={e => setSearch(e.target.value)}/>
+                                            </div>
+                                        </div>
+                                        <button className="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                                type="submit" onClick={() => searchBlog(search)} >Search
+                                        </button>
+                                    </div>
+                                </aside>
+
+                                <aside className="single_sidebar_widget popular_post_widget">
+                                    <h3 className="widget_title">Recent Post</h3>
+                                        {
+                                            currentData.map((blog, index) =>{
+                                                return(
+                                                    <div className="media post_item">
+                                                        <img className="image_blog_rencent" src={blog.image.indexOf('http')===0?blog.image:`http://localhost:4000/file/${blog.image}`}/>
+                                                            <div className="media-body">
+                                                                <a href={"/blog/" + blog._id}>
+                                                                    <h3>{blog.name}</h3>
+                                                                </a>
+                                                                <p>{blog.dateCreate}</p>
+                                                            </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </Container>
+                <Paginator
+                    totalRecords={dataShow.length}
+                    pageLimit={pageLimit}
+                    pageNeighbours={2}
+                    setOffset={setOffset}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+            </section>
         </Container>
     )
 }

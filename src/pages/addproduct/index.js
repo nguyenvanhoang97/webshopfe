@@ -69,68 +69,76 @@ function AddProduct(props) {
     }, []);
 
     return (
-        <Container fluid className="container-body">
-            <Container fluid className="comment-form">
-                <Col sm={2}></Col>
-                <Col sm={8}>
-                    {isAdd && <h2 className="title-side text-center">Thêm thông tin sản phẩm</h2>}
-                    {!isAdd && <h2 className="title-side text-center">Sửa thông tin sản phẩm</h2>}
-                    <div>
-                        <label htmlFor="fname">Tên sản phẩm</label>
-                        <input type="text" id="name" name="name" placeholder="Tên sản phẩm"
-                               required={true}
-                               value={name}
-                               onChange={e => setName(e.target.value)}/>
-
-                        <label htmlFor="fname">Hình ảnh sản phẩm</label>
-                        <div>
-                            <label htmlFor="upload-button">
-                                {image.preview ? (
-                                    <img src={image.preview} alt="Hình ảnh sản phẩm" width="300" height="300" />
-                                ) : (
-                                    <>
-                                        <h5 className="text-center">Upload your photo</h5>
-                                    </>
-                                )}
-                            </label>
-                            <input
-                                type="file"
-                                id="upload-button"
-                                required={true}
-                                style={{ display: "none" }}
-                                onChange={handleChange}
-                            />
+        <Container fluid>
+            <div className="slider-area ">
+                <div className="single-slider slider-height2" style={{display: 'flex', alignItems: 'center'}}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-12">
+                                <div className="hero-cap text-center">
+                                    {isAdd && <h2>Add product</h2>}
+                                    {!isAdd && <h2>Edit product</h2>}
+                                </div>
+                            </div>
                         </div>
-
-                        <label htmlFor="lname">Giá sản phẩm</label>
-                        <input type="text" id="price" name="price" placeholder="Giá sản phẩm"
-                               required={true}
-                               value={price}
-                               onChange={e => setPrice(e.target.value)}/>
-
-                        <label htmlFor="lname">Số lượng sản phẩm</label>
-                        <input type="text" id="amount" name="amount" placeholder="Số lượng sản phẩm"
-                               required={true}
-                               value={amount}
-                               onChange={e => setAmount(e.target.value)}/>
-
-                        <label htmlFor="subject">Mô tả chi tiết sản phẩm</label>
-                        <textarea style={{height: '400px'}} id="description" name="description" placeholder="Mô tả chi tiết"
-                                  required={true}
-                                  value={description}
-                                  onChange={e => setDesc(e.target.value)}>
-                        </textarea>
-
-                        {isAdd && <button type="submit" className="btn-custom btn-comment-form" onClick={addProduct}>
-                            Thêm sản phẩm
-                        </button>}
-                        {!isAdd && <button type="submit" className="btn-custom btn-comment-form" onClick={updateProduct}>
-                            Sửa sản phẩm
-                        </button>}
                     </div>
-                </Col>
-                <Col sm={2}></Col>
-            </Container>
+                </div>
+            </div>
+            <section className="blog_area section-padding" style={{maxWidth: '1000px', marginLeft: 'auto', marginRight: 'auto'}}>
+                <div>
+                    <label htmlFor="fname">Tên sản phẩm</label>
+                    <input type="text" id="name" name="name" placeholder="Tên sản phẩm"
+                           required={true}
+                           value={name}
+                           onChange={e => setName(e.target.value)}/>
+
+                    <label htmlFor="fname">Hình ảnh sản phẩm</label>
+                    <div>
+                        <label htmlFor="upload-button">
+                            {image.preview ? (
+                                <img src={image.preview} alt="Hình ảnh sản phẩm" width="300" height="300" />
+                            ) : (
+                                <>
+                                    <h5 className="text-center">Upload your photo</h5>
+                                </>
+                            )}
+                        </label>
+                        <input
+                            type="file"
+                            id="upload-button"
+                            required={true}
+                            style={{ display: "none" }}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <label htmlFor="lname">Giá sản phẩm</label>
+                    <input type="text" id="price" name="price" placeholder="Giá sản phẩm"
+                           required={true}
+                           value={price}
+                           onChange={e => setPrice(e.target.value)}/>
+
+                    <label htmlFor="lname">Số lượng sản phẩm</label>
+                    <input type="text" id="amount" name="amount" placeholder="Số lượng sản phẩm"
+                           required={true}
+                           value={amount}
+                           onChange={e => setAmount(e.target.value)}/>
+
+                    <label htmlFor="subject">Mô tả chi tiết sản phẩm</label>
+                    <textarea style={{height: '400px'}} id="description" name="description" placeholder="Mô tả chi tiết"
+                              required={true}
+                              value={description}
+                              onChange={e => setDesc(e.target.value)}>
+                    </textarea>
+
+                    {isAdd && <button type="submit" className="btn" onClick={addProduct}>
+                        Thêm sản phẩm
+                    </button>}
+                    {!isAdd && <button type="submit" className="btn btn-comment-form" onClick={updateProduct}>
+                        Sửa sản phẩm
+                    </button>}
+                </div>
+            </section>
         </Container>
     )
 }

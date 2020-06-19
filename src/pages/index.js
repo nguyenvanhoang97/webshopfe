@@ -1,31 +1,35 @@
 import React, {} from "react";
 import {Container} from "reactstrap";
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import Header from "./../components/header/header";
+import Header from "./../components/header/index";
 import HomeContent from "./homecontent/index";
 import BlogContent from "./blogcontent/index";
-import ProductItem from "./productitem/index";
 import Login from "./login/index";
 import ContentCart from "./cart/index";
 import HomeAdmin from "./homeadmin/index";
 import AddProduct from "./addproduct/index";
 import AddUser from "./addUser/index";
 import UserContent from "./usercontent/index";
-import CheckOut from "./checkout/checkout";
+import CheckOut from "./checkout/index";
 import AddNews from "./addnews/index";
 import NewsContent from "./newscontent/index";
 import BlogItem from "./blogitem";
 import OrderContent from "./ordercontent";
-import Footer from "../components/footer/footer";
+import Footer from "../components/footer/index";
+import MainContent from "./main/index";
+import AboutUs from "./about";
+import ProductItem from "./productitem";
 
 function Main() {
 
     return(
         <div>
             <Header/>
-            <Container fluid className="">
+            <Container fluid>
                 <Router>
-                    <Route exact path="/" component={HomeContent} />
+                    <Route exact path="/" component={MainContent} />
+                    <Route path="/shop" component={HomeContent} />
+                    <Route path="/about" component={AboutUs} />
                     <Route path="/blogs" component={BlogContent} />
                     <Route path='/product/:id' component={ProductItem}/>
                     <Route path='/blog/:id' component={BlogItem}/>
