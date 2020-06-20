@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Container, Col} from "reactstrap";
+import {Container} from "reactstrap";
 import Request from "../../utils/request";
 import FormData from "form-data";
 
@@ -19,7 +19,11 @@ function AddNews(props) {
         data.append('name', name)
         data.append('content', content)
         await Request.post('news', data)
-        window.location.replace('/news')
+            .then(function (response) {
+                window.location.replace('/news')
+            }).catch(err => {
+                alert("Thêm bài viết không thành công")
+            })
     }
 
     const updateNews = async e => {
@@ -29,7 +33,11 @@ function AddNews(props) {
         data.append('name', name)
         data.append('content', content)
         await Request.put('news/' + idNews, data)
-        window.location.replace('/news')
+            .then(function (response) {
+                window.location.replace('/news')
+            }).catch(err => {
+                alert("Thêm bài viết không thành công")
+            })
     }
 
     const getNewsId = async () => {

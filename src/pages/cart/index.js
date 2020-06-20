@@ -3,22 +3,22 @@ import {Container} from "reactstrap";
 import Request from "../../utils/request";
 
 function ContentCart() {
+    let total = 0
     const [cart, setCart] = useState([]);
-    const [amount, setAmount] = useState();
+    const [amount, setAmount] = useState(1);
 
     const getData = async () => {
         await Request.get("cart")
             .then( function (response) {
                 const {data} = response
-                console.log(data)
                 if (response.status === 200) {
                     const cart = data.carts
                     setCart(cart)
                 } else {
-                    alert("Ban chua dang nhap")
+                    alert("Bạn chưa đăng nhập")
                 }
             }).catch(err => {
-                alert("Ban chua dang nhap")
+                alert("Bạn chưa đăng nhập")
                 window.location.replace("/login")
             })
     };
@@ -32,13 +32,25 @@ function ContentCart() {
         window.location.reload()
     };
 
+    const plusAmount = async (id) => {
+        setAmount(amount+1)
+    };
+
+    const minusAmount = async (id) => {
+        setAmount(amount-1)
+    };
+
+    cart.forEach((product) => {
+        total += product.idProduct.price * product.idProduct.amount
+    });
+
     const dataProducts = (product, index) => {
         return (
             <tr key={index}>
                 <td>
                     <div className="media">
                         <div className="d-flex">
-                            <img src={product.idProduct.image.indexOf('http')===0?product.idProduct.image:`http://localhost:4000/file/${product.idProduct.image}`}/>
+                            <img style={{width:'150px', height: '150px'}} src={product.idProduct.image.indexOf('http')===0?product.idProduct.image:`http://localhost:4000/file/${product.idProduct.image}`}/>
                         </div>
                         <div className="media-body">
                             <p>{product.idProduct.name}</p>
@@ -53,9 +65,10 @@ function ContentCart() {
                 </td>
                 <td>
                     <div className="product_count">
-                        <input className="product-quantity-input" type="number" value="1" min="1"
-                               value={product.amount}
+                        {/*<span style={{border: 'none'}} className="input-number-decrement" onClick={() => minusAmount(product._id)}> <i className="ti-minus"></i></span>*/}
+                        <input className="input-number" type="text" value={amount} min="1" max="10"
                                onChange={e => setAmount(e.target.value)}/>
+                        {/*<span style={{border: 'none'}} className="input-number-increment" onClick={() => plusAmount(product._id)}> <i className="ti-plus"></i></span>*/}
                     </div>
                 </td>
                 <td>
@@ -96,14 +109,16 @@ function ContentCart() {
                                 <tbody>
                                 {cart.map(dataProducts)}
                                 <tr>
-                                    <td></td>
+                                    <td>
+                                        <span className="btn_1">Update Cart</span>
+                                    </td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <h5>Subtotal</h5>
+                                        <h5>Total</h5>
                                     </td>
                                     <td>
-                                        <h5>$2160.00</h5>
+                                        <h5>{total} vnd</h5>
                                     </td>
                                 </tr>
                                 </tbody>

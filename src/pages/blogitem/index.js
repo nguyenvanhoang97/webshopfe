@@ -4,7 +4,6 @@ import Request from "../../utils/request";
 import "./index.css"
 
 function BlogItem(props) {
-    console.log(props)
     const idNews = props.match.params.id;
 
     const [data, setData] = useState([]);
@@ -52,8 +51,9 @@ function BlogItem(props) {
                         <div className="col-sm-8 posts-list" style={{maxWidth: '67%'}}>
                             <div className="single-post">
                                 <div className="feature-img">
-                                    {/*<img className="card-img rounded-0"*/}
-                                    {/*     src={data.image.indexOf('http')===0?data.image:`http://localhost:4000/file/${data.image}`}/>*/}
+                                    <img alt={data.name} key={data._id}
+                                         className="img-blog"
+                                         src={data.image === 0 ? data.image : `http://localhost:4000/file/${data.image}`}/>
                                 </div>
                                 <div className="blog_details">
                                     <h2>
@@ -65,30 +65,29 @@ function BlogItem(props) {
                                 </div>
                             </div>
                             <div className="comments-area">
-                                <h4>Đánh giá</h4>
+                                <h4>Comments review</h4>
                                 <div className="comment-list">
                                     <div className="single-comment justify-content-between d-flex">
                                         {
                                             dataComment.map((cmt, index) => {
                                                 return(
-                                                    <div className="user" style={{display: 'flex', justifyContent: 'between'}}>
-                                                        <div>
+                                                    <div className="user" style={{display: 'flex', justifyContent: 'between', marginTop: '30px'}}>
+                                                        <div style={{display: 'flex'}}>
                                                             <div className="thumb" style={{textAlign: 'center'}}>
                                                                 <img src="/assets/img/comment/comment_1.png"/>
                                                             </div>
                                                             <div className="justify-content-between" style={{justifyContent: 'between'}}>
-                                                                <div className="d-flex align-items-center" style={{alignItems: 'center', textAlign: 'center'}}>
-                                                                    <h4>
-                                                                        <span>{cmt.nameComment}</span>
-                                                                    </h4>
-                                                                    <span>{cmt.email} </span>
+                                                                <div className="d-flex align-items-center" style={{alignItems: 'center'}}>
+                                                                    <span style={{marginLeft: '30px'}}>{cmt.nameComment}</span>
+
+                                                                    <span style={{marginLeft: '30px'}}>{cmt.email} </span>
+                                                                </div>
+                                                                <div className="desc" style={{marginLeft: '30px'}}>
+                                                                    <p className="comment">
+                                                                        {cmt.comment}
+                                                                    </p>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="desc" style={{marginLeft: '30px'}}>
-                                                            <p className="comment">
-                                                                {cmt.comment}
-                                                            </p>
                                                         </div>
                                                     </div>
                                                 )
@@ -128,7 +127,7 @@ function BlogItem(props) {
                                             <div className="form-group">
                                                 <textarea id="subject" name="subject" placeholder="Write something.."
                                                           cols="30" rows="9"
-                                                          className="form-control w-100"
+                                                          className="form-control"
                                                           required={true}
                                                           value={comment}
                                                           onChange={e => setComment(e.target.value)}>

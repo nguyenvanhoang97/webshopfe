@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {Container, Col} from "reactstrap";
+import {Container} from "reactstrap";
 import Request from "../../utils/request";
 
 function CheckOut() {
+
+    let total = 0
     const [cart, setCart] = useState([]);
     const [name, setName] = useState();
     const [address, setAddress] = useState();
@@ -15,6 +17,7 @@ function CheckOut() {
         await Request.get("cart")
             .then( function (response) {
                 const {data} = response
+                console.log(data)
                 if (data.carts.length > 0) {
                     const cart = data.carts
                     setCart(cart)
@@ -40,12 +43,16 @@ function CheckOut() {
         getData();
     }, []);
 
+    cart.forEach((order) => {
+        total += order.idProduct.price * order.amount
+    });
+
     const dataOrder = (order, index) => {
         return (
-            <tr key={index}>
-                <td className="text-center">{order.idProduct.name}</td>
-                <td className="text-center">{order.amount}</td>
-                <td className="text-center">{order.idProduct.price * order.amount}</td>
+            <tr style={{fontSize: '14px'}} key={index}>
+                <td style={{width: '45%'}} className="text-center">{order.idProduct.name}</td>
+                <td style={{width: '25%'}} className="text-center">{order.amount}</td>
+                <td style={{width: '30%'}} className="text-center">{order.idProduct.price * order.amount} vnd</td>
             </tr>
         )
     }
@@ -123,9 +130,9 @@ function CheckOut() {
                                     <table className="table" style={{border: 'none'}}>
                                         <thead>
                                         <tr>
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col">Total</th>
+                                            <th style={{ fontSize: '12px'}} className="text-center" scope="col">Product</th>
+                                            <th style={{ fontSize: '12px'}} className="text-center" scope="col">Amount</th>
+                                            <th style={{ fontSize: '12px'}} className="text-center" scope="col">Total</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -133,15 +140,15 @@ function CheckOut() {
                                         <tr>
                                             <td></td>
                                             <td>
-                                                Subtotal
+                                                Total
                                             </td>
                                             <td>
-                                                $2160.00
+                                                {total} vnd
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <button className="btn_3" onClick={addOrder}>Proceed to Paypal</button>
+                                    <button className="btn" style={{width: '100%'}} onClick={addOrder}>Proceed to Paypal</button>
                                 </div>
                             </div>
                         </div>

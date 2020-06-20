@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Container, Col, Table, Button} from "reactstrap";
+import {Container} from "reactstrap";
 import Request from "../../utils/request";
 import Moment from 'react-moment';
 import 'moment-timezone';
@@ -54,9 +54,9 @@ function NewsContent() {
                 <td className="text-center">{index + 1}</td>
                 <td className="text-center">{news.name}</td>
                 <td className="text-center"><img style={{width: '150px', height: '150px'}} src={news.image.indexOf('http')===0?news.image:`http://localhost:4000/file/${news.image}`}/></td>
-                <td className="text-center"><Moment>{news.dateCreate}</Moment></td>
-                <td className="text-center"><Moment>{news.dateUpdate}</Moment></td>
-                <td>{((news.content || '').length > 500 ? `${news.content.slice(0, 500)} ...`:news.content)}</td>
+                <td className="text-center"><Moment format="YYYY/MM/DD">{news.dateCreate}</Moment></td>
+                <td className="text-center"><Moment format="YYYY/MM/DD">{news.dateUpdate}</Moment></td>
+                <td>{((news.content || '').length > 200 ? `${news.content.slice(0, 200)} ...`:news.content)}</td>
                 <td className="text-center">
                     <button className="btn_3" style={{padding: '9px'}} onClick={() => editNews(news._id)}>Edit</button>
                     <button className="btn_3" style={{padding: '9px'}} onClick={() => removeNews(news._id)}>Delete</button>
@@ -118,7 +118,7 @@ function NewsContent() {
                                 setCurrentPage={setCurrentPage}
                             />
                             <div className="checkout_btn_inner float-right">
-                                <button href="/add/news" className="btn">Thêm bài viết</button>
+                                <button className="btn"><a href="/add/news">Thêm bài viết</a></button>
                             </div>
                         </div>
                     </div>

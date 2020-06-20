@@ -78,7 +78,8 @@ function Login(props) {
                         <div className="row">
                             <div className="col-xl-12">
                                 <div className="hero-cap text-center">
-                                    <h2>Login</h2>
+                                    {isLogin &&<h2>Login</h2>}
+                                    {isRegister && <h2>Register</h2>}
                                 </div>
                             </div>
                         </div>

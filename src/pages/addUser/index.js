@@ -15,7 +15,11 @@ function AddUser(props) {
     const addUser = async (e) => {
         e.preventDefault()
         await Request.post('user', {name, username, isAdmin, password})
-        window.location.replace('/user');
+            .then(function (response) {
+                window.location.replace('/user')
+            }).catch(err => {
+                alert("Thêm người dùng không thành công")
+            })
     }
 
     const getUserById = async () => {
@@ -30,7 +34,11 @@ function AddUser(props) {
     const updateUser = async (e) => {
         e.preventDefault()
         await Request.put('user/' + idUser,{name, username, password, isAdmin})
-        window.location.replace('http://localhost:3000/user');
+            .then(function (response) {
+                window.location.replace('/user')
+            }).catch(err => {
+                alert("Cập nhật không thành công")
+            })
     }
 
     useEffect( () => {
@@ -55,22 +63,26 @@ function AddUser(props) {
             </div>
             <section className="blog_area section-padding" style={{maxWidth: '1000px', marginLeft: 'auto', marginRight: 'auto'}}>
                 <div style={{display: 'inline'}}>
-                    <h3 htmlFor="fname">Họ tên</h3>
-                    <input type="text" id="name" name="name" placeholder="Họ tên người dùng"
+                    <h3 htmlFor="fname">First and last name</h3>
+                    <input type="text" id="name" name="name" placeholder="First and last name"
+                           className="form-control"
                            required={true}
                            value={name}
                            onChange={e => setName(e.target.value)}
                     />
 
                     <h3 htmlFor="lname">Username</h3>
-                    <input type="text" id="uname" name="username" placeholder="Tên đăng nhập"
+                    <input type="text" id="uname" name="username" placeholder="Username"
+                           className="form-control"
                            required={true}
                            value={username}
                            onChange={e => setUsername(e.target.value)}
                     />
 
                     {isAdd && <h3 htmlFor="lname">Password ( tối thiểu 6 kí tự )</h3>}
-                    {isAdd && <input type="text" id="pass" name="password" placeholder="Mật khẩu"
+                    {isAdd && <input type="password" id="pass" name="password" placeholder="Password"
+                                     style={{width: '97.5%'}}
+                           className="form-control"
                            required={true}
                            value={password}
                            onChange={e => setPass(e.target.value)}
@@ -84,10 +96,10 @@ function AddUser(props) {
                 </div>
                 <div className="blog_area section-padding">
                     {isAdd && <button type="button" className="btn" onClick={addUser}>
-                        Thêm
+                        Thêm người dùng
                     </button>}
                     {!isAdd && <button type="button" className="btn" onClick={updateUser}>
-                        Sửa
+                        Sửa thông tin người dùng
                     </button>}
                 </div>
             </section>

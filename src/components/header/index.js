@@ -17,7 +17,7 @@ function Header() {
                         <div className="menu-wrapper">
 
                             <div className="logo">
-                                <a href="/"><img src="/assets/img/logo/logo.png" /></a>
+                                <a href="#"><img src="/assets/img/logo/logo.png" /></a>
                             </div>
 
                             <div className="main-menu d-none d-lg-block">
@@ -45,7 +45,7 @@ function Header() {
                             <div className="header-right">
                                 <ul style={{listStyle: 'none'}}>
                                     <li><a href="/login"><span className=""><FaUsers color='black' style={{width: '30px'}}/></span></a></li>
-                                    <li><a href="/cart"><span className=""><FaCartPlus color='black' style={{width: '30px'}}/></span></a></li>
+                                    {!isAdmin && <li><a href="/cart"><span className=""><FaCartPlus color='black' style={{width: '30px'}}/></span></a></li>}
                                 </ul>
                             </div>
                         </div>

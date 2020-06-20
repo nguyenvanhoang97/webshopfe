@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Container, Col} from "reactstrap";
+import {Container} from "reactstrap";
 import FormData from "form-data";
 import Request from "../../utils/request";
 
@@ -23,7 +23,11 @@ function AddProduct(props) {
         data.append('amount',amount)
         data.append('description',description)
         await Request.post('product', data)
-        window.location.replace('http://localhost:3000/home')
+            .then(function (response) {
+                window.location.replace('http://localhost:3000/home')
+            }).catch(err => {
+                alert("Thêm sản phẩm không thành công")
+            })
     }
 
     const updateProduct = async (e) => {
@@ -36,7 +40,7 @@ function AddProduct(props) {
         data.append('description',description)
         await Request.put('product/' + idProduct, data)
             .then(function (response) {
-                window.location.replace('http://localhost:3000/home')
+                window.location.replace('/home')
             }).catch(err => {
                 alert("Cập nhật không thành công")
             })
@@ -99,7 +103,7 @@ function AddProduct(props) {
                                 <img src={image.preview} alt="Hình ảnh sản phẩm" width="300" height="300" />
                             ) : (
                                 <>
-                                    <h5 className="text-center">Upload your photo</h5>
+                                    <h4 className="text-center">Upload hình ảnh</h4>
                                 </>
                             )}
                         </label>

@@ -46,7 +46,7 @@ function HomeAdmin() {
     };
 
     const editProduct = async (idProduct) => {
-        window.location.replace('/product/'+ idProduct);
+        window.location.replace('/edit/product/'+ idProduct);
     };
 
     const dataProducts = (product, index) => {
@@ -57,8 +57,8 @@ function HomeAdmin() {
                 <td className="text-center"><img style={{width: '150px', height: '150px'}} src={product.image.indexOf('http')===0?product.image:`http://localhost:4000/file/${product.image}`}/></td>
                 <td className="text-center">{product.price} vnđ</td>
                 <td className="text-center">{product.amount}</td>
-                <td className="text-center"><Moment>{product.dateCreate}</Moment></td>
-                <td className="text-center"><Moment>{product.dateUpdate}</Moment></td>
+                <td className="text-center"><Moment format="YYYY/MM/DD">{product.dateCreate}</Moment></td>
+                <td className="text-center"><Moment format="YYYY/MM/DD">{product.dateUpdate}</Moment></td>
                 <td className="text-center">
                     <button className="btn_3" style={{padding: '9px'}} onClick={() => editProduct(product._id)}>Edit</button>
                     <button className="btn_3" style={{padding: '9px'}} onClick={() => removeProduct(product._id)}>Delete</button>
@@ -121,7 +121,7 @@ function HomeAdmin() {
                                 setCurrentPage={setCurrentPage}
                             />
                             <div className="checkout_btn_inner float-right">
-                                <button href="/add/product" className="btn">Thêm Sản Phẩm</button>
+                                <button className="btn"><a  href="/add/product">Thêm Sản Phẩm</a></button>
                             </div>
                         </div>
                     </div>

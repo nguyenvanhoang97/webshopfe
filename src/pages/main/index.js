@@ -8,7 +8,8 @@ function MainContent() {
 
     const getData = async () => {
         const {data} = await Request.getNoToken("product")
-        setData(data);
+        const dataShow= data.slice(0,3)
+        setData(dataShow);
     };
 
     const addToCart = async (idProduct) => {
@@ -177,7 +178,7 @@ function MainContent() {
                         <div className="col-lg-12">
                             <div className="video-wrap">
                                 <div className="play-btn "><a className="popup-video"
-                                                              href="https://www.youtube.com/watch?v=KMc6DyEJp04"><i
+                                                              href="#"><i
                                     className="fas fa-play"></i></a></div>
                             </div>
                         </div>

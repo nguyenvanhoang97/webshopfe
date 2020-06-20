@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./index.css"
-import {Container, Row, Col} from "reactstrap";
+import {Container} from "reactstrap";
 import Request from "../../utils/request";
 
 function ProductItem(props) {
@@ -28,9 +28,9 @@ function ProductItem(props) {
     const addToCart = async () => {
         await Request.put('cart', {idProduct, amount: 1})
             .then( function (response) {
-                alert("Da them vao gio hang")
+                alert("Đã thêm vào giỏ hàng")
             }).catch(err => {
-                alert("Da co trong gio hang hoac chua dang nhap")
+                alert("Đã có trong giỏ hàng hoặc chưa đăng nhập")
             })
     };
 
@@ -81,30 +81,28 @@ function ProductItem(props) {
                         </div>
 
                         <div className="comments-area">
-                            <h4>Đánh giá</h4>
+                            <h4>Comments review</h4>
                             <div className="comment-list">
                                 <div className="single-comment justify-content-between d-flex">
                                     {
                                         dataComment.map((cmt, index) => {
                                             return(
-                                                <div className="user" style={{display: 'flex', justifyContent: 'between'}}>
-                                                    <div>
+                                                <div className="user" style={{display: 'flex', justifyContent: 'between', marginTop: '30px'}}>
+                                                    <div style={{display: 'flex'}}>
                                                         <div className="thumb" style={{textAlign: 'center'}}>
                                                             <img src="/assets/img/comment/comment_1.png"/>
                                                         </div>
                                                         <div className="justify-content-between" style={{justifyContent: 'between'}}>
-                                                            <div className="d-flex align-items-center" style={{alignItems: 'center', textAlign: 'center'}}>
-                                                                <h4>
-                                                                    <span>{cmt.nameComment}</span>
-                                                                </h4>
-                                                                <span>{cmt.email} </span>
+                                                            <div className="d-flex align-items-center" style={{alignItems: 'center'}}>
+                                                                <span style={{marginLeft: '30px'}}>{cmt.nameComment}</span>
+                                                                <span style={{marginLeft: '30px'}}>{cmt.email} </span>
+                                                            </div>
+                                                            <div className="desc" style={{marginLeft: '30px'}}>
+                                                                <p className="comment">
+                                                                    {cmt.comment}
+                                                                </p>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="desc" style={{marginLeft: '30px'}}>
-                                                        <p className="comment">
-                                                            {cmt.comment}
-                                                        </p>
                                                     </div>
                                                 </div>
                                             )
@@ -144,7 +142,7 @@ function ProductItem(props) {
                                     <div className="col-12">
                                         <div className="form-group">
                                             <textarea id="subject" name="subject" placeholder="Write something.."
-                                                className="form-control w-100"
+                                                className="form-control"
                                                 required={true}
                                                 value={comment}
                                                 onChange={e => setComment(e.target.value)}>

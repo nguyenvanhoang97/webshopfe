@@ -3,6 +3,7 @@ import {Container} from "reactstrap";
 import "./index.css"
 import Request from "../../utils/request";
 import Paginator from 'react-hooks-paginator';
+import Moment from "react-moment";
 
 function BlogContent() {
 
@@ -68,8 +69,7 @@ function BlogContent() {
                                                 <img className="card-img rounded-0"
                                                      src={blog.image.indexOf('http')===0?blog.image:`http://localhost:4000/file/${blog.image}`}/>
                                                     <a href="#" className="blog_item_date">
-                                                        <h3>{blog.dateCreate}</h3>
-                                                        <p>{blog.dateCreate}</p>
+                                                        <h3><Moment format="YYYY/MM/DD">{(blog.dateCreate)}</Moment></h3>
                                                     </a>
                                             </div>
 
@@ -119,7 +119,7 @@ function BlogContent() {
                                                                 <a href={"/blog/" + blog._id}>
                                                                     <h3>{blog.name}</h3>
                                                                 </a>
-                                                                <p>{blog.dateCreate}</p>
+                                                                <p><Moment format="YYYY/MM/DD">{(blog.dateCreate)}</Moment></p>
                                                             </div>
                                                     </div>
                                                 )

@@ -7,7 +7,7 @@ function HomeContent() {
     const [dataShow, setDataShow] = useState([]);
     const [dataFull, setDataFull] = useState([]);
     const [search, setSearch] = useState([]);
-    const pageLimit = 12;
+    const pageLimit = 1;
 
     const [offset, setOffset] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -36,9 +36,9 @@ function HomeContent() {
     const addToCart = async (idProduct) => {
         await Request.put('cart', {idProduct, amount: 1})
             .then( function (response) {
-                alert("Da them vao gio hang")
+                alert("Đã thêm vào giỏ hàng")
             }).catch(err => {
-            alert("Da co trong gio hang hoac chua dang nhap")
+            alert("Đã có trong giỏ hàng hoặc chưa đăng nhập")
         })
     };
 

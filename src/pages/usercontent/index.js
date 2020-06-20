@@ -56,8 +56,8 @@ function UserContent() {
                 <td className="text-center">{index + 1}</td>
                 <td className="text-center">{user.name}</td>
                 <td className="text-center">{user.username}</td>
-                <td className="text-center"><Moment>{user.dateCreate}</Moment></td>
-                <td className="text-center"><Moment>{user.dateUpdate}</Moment></td>
+                <td className="text-center"><Moment format="YYYY/MM/DD">{user.dateCreate}</Moment></td>
+                <td className="text-center"><Moment format="YYYY/MM/DD">{user.dateUpdate}</Moment></td>
                 <td className="text-center">
                     {<input type="checkbox" checked={user.isAdmin}/>}
                 </td>
@@ -122,7 +122,7 @@ function UserContent() {
                                 setCurrentPage={setCurrentPage}
                             />
                             <div className="checkout_btn_inner float-right">
-                                <button href="/add/user" className="btn">Thêm người dùng</button>
+                                <button className="btn"><a href="/add/user">Thêm người dùng</a></button>
                             </div>
                         </div>
                     </div>
