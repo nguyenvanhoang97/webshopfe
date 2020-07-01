@@ -89,7 +89,7 @@ function ProductItem(props) {
                                             return(
                                                 <div className="user" style={{display: 'flex', justifyContent: 'between', marginTop: '30px'}}>
                                                     <div style={{display: 'flex'}}>
-                                                        <div className="thumb" style={{textAlign: 'center'}}>
+                                                        <div className="thumb" style={{textAlign: 'center', minWidth: '100px'}}>
                                                             <img src="/assets/img/comment/comment_1.png"/>
                                                         </div>
                                                         <div className="justify-content-between" style={{justifyContent: 'between'}}>

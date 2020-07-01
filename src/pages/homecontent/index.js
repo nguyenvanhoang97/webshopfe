@@ -7,7 +7,7 @@ function HomeContent() {
     const [dataShow, setDataShow] = useState([]);
     const [dataFull, setDataFull] = useState([]);
     const [search, setSearch] = useState([]);
-    const pageLimit = 1;
+    const pageLimit = 12;
 
     const [offset, setOffset] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);

@@ -7,7 +7,7 @@ function MainContent() {
     const [data, setData] = useState([]);
 
     const getData = async () => {
-        const {data} = await Request.getNoToken("product")
+        const {data} = await Request.getNoToken('product')
         const dataShow= data.slice(0,3)
         setData(dataShow);
     };
@@ -27,7 +27,6 @@ function MainContent() {
 
     return (
         <Container fluid>
-
             <div className="slider-area ">
                 <div className="slider-active">
                     <div className="single-slider slider-height d-flex align-items-center slide-bg">
@@ -60,7 +59,6 @@ function MainContent() {
 
             <section className="new-product-area section-padding30">
                 <div className="container">
-
                     <div className="row">
                         <div className="col-xl-12">
                             <div className="section-tittle mb-70">
@@ -152,7 +150,7 @@ function MainContent() {
                                                     <span onClick={() => addToCart(product._id)}>Add to cart</span>
                                                 </div>
                                                 <div className="favorit-items">
-                                                    <span className="flaticon-heart"></span>
+
                                                 </div>
                                             </div>
                                             <div className="popular-caption">
@@ -177,9 +175,11 @@ function MainContent() {
                     <div className="row align-items-center">
                         <div className="col-lg-12">
                             <div className="video-wrap">
-                                <div className="play-btn "><a className="popup-video"
-                                                              href="#"><i
-                                    className="fas fa-play"></i></a></div>
+                                <div className="play-btn ">
+                                    <a className="popup-video" href="#">
+                                        <i className="fas fa-play"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

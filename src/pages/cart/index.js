@@ -32,16 +32,16 @@ function ContentCart() {
         window.location.reload()
     };
 
-    const plusAmount = async (id) => {
+    const plusAmount = async () => {
         setAmount(amount+1)
     };
 
-    const minusAmount = async (id) => {
+    const minusAmount = async () => {
         setAmount(amount-1)
     };
 
     cart.forEach((product) => {
-        total += product.idProduct.price * product.idProduct.amount
+        total += product.idProduct.price * product.amount
     });
 
     const dataProducts = (product, index) => {
@@ -65,14 +65,14 @@ function ContentCart() {
                 </td>
                 <td>
                     <div className="product_count">
-                        {/*<span style={{border: 'none'}} className="input-number-decrement" onClick={() => minusAmount(product._id)}> <i className="ti-minus"></i></span>*/}
-                        <input className="input-number" type="text" value={amount} min="1" max="10"
+                        <span style={{border: 'none'}} className="input-number-decrement" onClick={() => minusAmount()}> <i className="ti-minus"></i></span>
+                        <input className="input-number" type="text" value={product.amount} min={1} max={10}
                                onChange={e => setAmount(e.target.value)}/>
-                        {/*<span style={{border: 'none'}} className="input-number-increment" onClick={() => plusAmount(product._id)}> <i className="ti-plus"></i></span>*/}
+                        <span style={{border: 'none'}} className="input-number-increment" onClick={() => plusAmount()}> <i className="ti-plus"></i></span>
                     </div>
                 </td>
                 <td>
-                    <h5>{product.idProduct.price * product.idProduct.amount}</h5>
+                    <h5>{product.idProduct.price * product.amount}</h5>
                 </td>
             </tr>
         )
@@ -109,9 +109,7 @@ function ContentCart() {
                                 <tbody>
                                 {cart.map(dataProducts)}
                                 <tr>
-                                    <td>
-                                        <span className="btn_1">Update Cart</span>
-                                    </td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>

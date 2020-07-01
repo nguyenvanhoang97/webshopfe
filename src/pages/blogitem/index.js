@@ -52,7 +52,7 @@ function BlogItem(props) {
                             <div className="single-post">
                                 <div className="feature-img">
                                     <img alt={data.name} key={data._id}
-                                         className="img-blog"
+                                         className="img-comment"
                                          src={data.image === 0 ? data.image : `http://localhost:4000/file/${data.image}`}/>
                                 </div>
                                 <div className="blog_details">
@@ -73,7 +73,7 @@ function BlogItem(props) {
                                                 return(
                                                     <div className="user" style={{display: 'flex', justifyContent: 'between', marginTop: '30px'}}>
                                                         <div style={{display: 'flex'}}>
-                                                            <div className="thumb" style={{textAlign: 'center'}}>
+                                                            <div className="thumb" style={{textAlign: 'center', minWidth: '100px'}}>
                                                                 <img src="/assets/img/comment/comment_1.png"/>
                                                             </div>
                                                             <div className="justify-content-between" style={{justifyContent: 'between'}}>
